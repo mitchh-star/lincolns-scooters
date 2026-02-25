@@ -155,7 +155,7 @@
             <span class="price-original">$349</span>
             <span class="price-save">Save $50</span>
           </div>
-          <a href="#order" class="product-btn" data-product="G-Cycle Z85F — $299">Order Now</a>
+          <a href="https://paypal.me/lincolnsscooter/299" target="_blank" class="product-btn">Pay with PayPal — $299</a>
         </div>
       </div>
 
@@ -176,7 +176,7 @@
             <span class="price-original">$549</span>
             <span class="price-save">Save $260</span>
           </div>
-          <a href="#order" class="product-btn" data-product="Atomi Alpha Lite — $289">Order Now</a>
+          <a href="https://paypal.me/lincolnsscooter/289" target="_blank" class="product-btn">Pay with PayPal — $289</a>
         </div>
       </div>
 
@@ -197,7 +197,7 @@
             <span class="price-original">$649</span>
             <span class="price-save">Save $50</span>
           </div>
-          <a href="#order" class="product-btn" data-product="G-Cycle Z14 — $599">Order Now</a>
+          <a href="https://paypal.me/lincolnsscooter/599" target="_blank" class="product-btn">Pay with PayPal — $599</a>
         </div>
       </div>
 
@@ -232,32 +232,20 @@
     </div>
   </section>
 
-  <!-- Contact / Order Form -->
+  <!-- Order Section -->
   <section class="contact" id="order">
     <h2>Ready to Ride?</h2>
-    <p>Fill out the form below and we'll get your scooter to you ASAP.</p>
-    <form class="contact-form" id="orderForm">
-      <label for="name">Full Name</label>
-      <input type="text" id="name" name="name" required placeholder="John Doe">
-      
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required placeholder="john@example.com">
-      
-      <label for="phone">Phone</label>
-      <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
-      
-      <label for="product">Which Scooter?</label>
-      <select id="product" name="product">
-        <option value="G-Cycle Z85F — $299">G-Cycle Z85F — $299</option>
-        <option value="Atomi Alpha Lite — $289">Atomi Alpha Lite — $289</option>
-        <option value="G-Cycle Z14 — $599">G-Cycle Z14 — $599</option>
-      </select>
-
-      <label for="address">Shipping Address</label>
-      <textarea id="address" name="address" rows="3" placeholder="Street, City, State, ZIP"></textarea>
-      
-      <button type="submit">Place Order →</button>
-    </form>
+    <p>Choose your scooter above and pay securely with PayPal.<br>After payment, email us your shipping address.</p>
+    <div style="display:flex; flex-direction:column; gap:16px; margin: 30px 0;">
+      <a href="https://paypal.me/lincolnsscooter/299" target="_blank" class="product-btn" style="max-width:400px;margin:0 auto;">G-Cycle Z85F — Pay $299</a>
+      <a href="https://paypal.me/lincolnsscooter/289" target="_blank" class="product-btn" style="max-width:400px;margin:0 auto;">Atomi Alpha Lite — Pay $289</a>
+      <a href="https://paypal.me/lincolnsscooter/599" target="_blank" class="product-btn" style="max-width:400px;margin:0 auto;">G-Cycle Z14 — Pay $599</a>
+    </div>
+    <p style="color:#888; font-size:14px; margin-top:20px;">📧 After payment, email your order details and shipping address to:<br><a href="mailto:support@lincolnsscooter.com" style="color:#22c55e; font-weight:600;">support@lincolnsscooter.com</a></p>
+    <div style="display:flex; gap:16px; justify-content:center; margin-top:30px; flex-wrap:wrap;">
+      <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" alt="PayPal" style="height:40px; border-radius:6px;">
+      <div style="display:flex; align-items:center; gap:8px; background:#f0f0f0; padding:8px 16px; border-radius:8px; font-size:13px; font-weight:600; color:#555;">🔒 Secure Payment</div>
+    </div>
   </section>
 
   <!-- Footer -->
@@ -266,34 +254,12 @@
   </footer>
 
   <script>
-    // Auto-select product from card click
-    document.querySelectorAll('.product-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const product = btn.dataset.product;
-        if (product) {
-          document.getElementById('product').value = product;
-        }
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) { e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
       });
-    });
-
-    // Form submission
-    document.getElementById('orderForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const data = new FormData(e.target);
-      const order = Object.fromEntries(data);
-      
-      // For now, mailto fallback. Replace with Stripe/backend later.
-      const subject = encodeURIComponent('New Order: ' + order.product);
-      const body = encodeURIComponent(
-        'Name: ' + order.name + '\n' +
-        'Email: ' + order.email + '\n' +
-        'Phone: ' + order.phone + '\n' +
-        'Product: ' + order.product + '\n' +
-        'Address: ' + order.address
-      );
-      window.location.href = 'mailto:mitchh@damaris.club?subject=' + subject + '&body=' + body;
-      
-      alert('Thank you! Your order has been submitted. We will contact you shortly to confirm payment and shipping.');
     });
   </script>
 
