@@ -617,6 +617,7 @@
       
       localStorage.setItem('cart', JSON.stringify(cart));
       updateCartDisplay();
+      showCart();
       
       // Show feedback
       const button = event.target;
@@ -651,7 +652,6 @@
     function updateCartDisplay() {
       const cartCount = document.getElementById('cart-count');
       const cartContent = document.getElementById('cart-content');
-      const cartEmpty = document.getElementById('cart-empty');
       const cartFooter = document.getElementById('cart-footer');
       const cartTotal = document.getElementById('cart-total');
       
@@ -662,13 +662,10 @@
       cartTotal.textContent = `$${totalPrice}`;
       
       if (cart.length === 0) {
-        cartEmpty.style.display = 'block';
         cartFooter.style.display = 'none';
         cartContent.innerHTML = '<div class="cart-empty">Your cart is empty</div>';
       } else {
-        cartEmpty.style.display = 'none';
         cartFooter.style.display = 'block';
-        
         cartContent.innerHTML = cart.map(item => `
           <div class="cart-item">
             <img src="${item.image}" alt="${item.name}" class="cart-item-image">
@@ -679,12 +676,17 @@
                 <button class="qty-btn" onclick="updateQuantity('${item.id}', -1)" ${item.quantity <= 1 ? 'disabled' : ''}>−</button>
                 <span class="cart-item-qty">${item.quantity}</span>
                 <button class="qty-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
-                <a href="#" class="remove-btn" onclick="removeFromCart('${item.id}')">Remove</a>
+                <a href="#" class="remove-btn" onclick="event.preventDefault();removeFromCart('${item.id}')">Remove</a>
               </div>
             </div>
           </div>
         `).join('');
       }
+    }
+
+    function showCart() {
+      document.getElementById('cart-drawer').classList.add('show');
+      document.getElementById('cart-overlay').classList.add('show');
     }
 
     function toggleCart() {
