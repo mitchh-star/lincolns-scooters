@@ -18,8 +18,71 @@
     .nav-links { display: flex; gap: 32px; align-items: center; }
     .nav-links a { text-decoration: none; color: #555; font-size: 14px; font-weight: 500; transition: color 0.2s; }
     .nav-links a:hover { color: #1a1a1a; }
-    .nav-cta { background: #1a1a1a; color: #fff !important; padding: 10px 24px; border-radius: 8px; font-weight: 600; }
-    .nav-cta:hover { background: #333 !important; }
+    .nav-user { display: flex; align-items: center; gap: 16px; }
+    .cart-btn { position: relative; background: none; border: none; font-size: 20px; cursor: pointer; color: #555; transition: color 0.2s; }
+    .cart-btn:hover { color: #22c55e; }
+    .cart-badge { position: absolute; top: -8px; right: -8px; background: #22c55e; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+    .user-dropdown { position: relative; }
+    .user-btn { background: none; border: none; color: #555; font-size: 14px; font-weight: 500; cursor: pointer; padding: 8px 16px; border-radius: 6px; transition: all 0.2s; }
+    .user-btn:hover { background: #f5f5f5; }
+    .dropdown-menu { position: absolute; top: 100%; right: 0; background: white; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 8px 0; min-width: 160px; display: none; }
+    .dropdown-menu.show { display: block; }
+    .dropdown-item { display: block; padding: 10px 16px; color: #555; text-decoration: none; font-size: 14px; transition: background 0.2s; }
+    .dropdown-item:hover { background: #f5f5f5; }
+    .auth-links { display: flex; gap: 16px; align-items: center; }
+    .auth-btn { background: none; border: none; color: #555; font-size: 14px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
+    .auth-btn:hover { color: #22c55e; }
+    .auth-btn.primary { background: #1a1a1a; color: #fff !important; padding: 10px 20px; border-radius: 8px; font-weight: 600; }
+    .auth-btn.primary:hover { background: #22c55e !important; }
+
+    /* Modals */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; backdrop-filter: blur(4px); }
+    .modal.show { display: flex; align-items: center; justify-content: center; }
+    .modal-content { background: white; border-radius: 16px; padding: 32px; max-width: 400px; width: 90%; max-height: 90%; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .modal-header { display: flex; justify-content: between; align-items: center; margin-bottom: 24px; }
+    .modal-title { font-size: 24px; font-weight: 700; }
+    .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: #666; margin-left: auto; }
+    .form-group { margin-bottom: 20px; }
+    .form-label { display: block; font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px; }
+    .form-input { width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px; font-family: inherit; transition: border 0.2s; }
+    .form-input:focus { outline: none; border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1); }
+    .btn { padding: 12px 24px; background: #1a1a1a; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%; }
+    .btn:hover { background: #22c55e; }
+    .btn:disabled { background: #ccc; cursor: not-allowed; }
+    .text-link { color: #22c55e; text-decoration: none; font-weight: 500; }
+    .text-link:hover { text-decoration: underline; }
+    .text-center { text-align: center; }
+    .mt-16 { margin-top: 16px; }
+
+    /* Cart */
+    .cart-drawer { position: fixed; top: 0; right: -100%; width: 100%; max-width: 480px; height: 100vh; background: white; z-index: 1001; transition: right 0.3s ease; box-shadow: -4px 0 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+    .cart-drawer.show { right: 0; }
+    .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.3); z-index: 1000; display: none; }
+    .cart-overlay.show { display: block; }
+    .cart-header { padding: 24px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+    .cart-title { font-size: 20px; font-weight: 700; }
+    .cart-close { background: none; border: none; font-size: 24px; cursor: pointer; color: #666; }
+    .cart-content { flex: 1; overflow-y: auto; padding: 24px; }
+    .cart-empty { text-align: center; color: #666; margin-top: 40px; }
+    .cart-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid #f0f0f0; }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-item-image { width: 80px; height: 80px; object-fit: contain; background: #f5f5f5; border-radius: 8px; }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .cart-item-price { color: #666; font-size: 14px; margin-bottom: 8px; }
+    .cart-item-controls { display: flex; align-items: center; gap: 12px; }
+    .qty-btn { width: 28px; height: 28px; border: 1px solid #ddd; background: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; font-weight: 600; color: #555; }
+    .qty-btn:hover { background: #f5f5f5; }
+    .qty-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .cart-item-qty { font-size: 14px; font-weight: 600; min-width: 20px; text-align: center; }
+    .remove-btn { color: #ef4444; font-size: 12px; text-decoration: none; margin-left: auto; }
+    .remove-btn:hover { text-decoration: underline; }
+    .cart-footer { padding: 24px; border-top: 1px solid #eee; }
+    .cart-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .total-label { font-size: 18px; font-weight: 600; }
+    .total-amount { font-size: 24px; font-weight: 800; color: #22c55e; }
+    .checkout-btn { background: #22c55e; }
+    .checkout-btn:hover { background: #16a34a; }
 
     /* Hero */
     .hero { padding: 140px 24px 80px; text-align: center; background: linear-gradient(180deg, #f8faf8 0%, #fff 100%); }
@@ -41,18 +104,26 @@
     
     .product-card { background: #fafafa; border-radius: 20px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
     .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
-    .product-img { width: 100%; height: 320px; object-fit: contain; background: #f0f0f0; padding: 20px; }
+    
+    .product-gallery { position: relative; padding: 20px; background: #f0f0f0; }
+    .main-image { width: 100%; height: 300px; object-fit: contain; cursor: pointer; transition: opacity 0.3s; }
+    .thumbnail-nav { display: flex; gap: 8px; margin-top: 16px; justify-content: center; flex-wrap: wrap; }
+    .thumbnail { width: 50px; height: 50px; object-fit: contain; border: 2px solid transparent; border-radius: 6px; cursor: pointer; transition: all 0.2s; background: #fff; }
+    .thumbnail.active { border-color: #22c55e; }
+    .thumbnail:hover { border-color: #22c55e; opacity: 0.8; }
+    
     .product-info { padding: 28px; }
     .product-name { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
     .product-tagline { font-size: 14px; color: #888; margin-bottom: 16px; line-height: 1.5; }
-    .product-specs { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
-    .spec { background: #fff; border: 1px solid #e5e5e5; border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 500; color: #555; }
+    .product-specs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .spec { background: #fff; border: 1px solid #e5e5e5; border-radius: 8px; padding: 6px 10px; font-size: 12px; font-weight: 500; color: #555; }
     .product-price { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
     .price-current { font-size: 28px; font-weight: 800; color: #1a1a1a; }
     .price-original { font-size: 16px; color: #bbb; text-decoration: line-through; }
     .price-save { font-size: 13px; font-weight: 600; color: #22c55e; background: #ecfdf5; padding: 4px 10px; border-radius: 6px; }
-    .product-btn { display: block; width: 100%; padding: 14px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; transition: background 0.2s; }
-    .product-btn:hover { background: #22c55e; }
+    .add-to-cart-btn { display: block; width: 100%; padding: 14px; background: #22c55e; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; transition: all 0.2s; }
+    .add-to-cart-btn:hover { background: #16a34a; transform: translateY(-1px); }
+    .add-to-cart-btn:active { transform: translateY(0); }
 
     /* Features */
     .features { background: #f8faf8; padding: 80px 24px; }
@@ -62,21 +133,14 @@
     .feature h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
     .feature p { font-size: 14px; color: #666; line-height: 1.6; }
 
-    /* Contact / Order */
-    .contact { max-width: 600px; margin: 0 auto; padding: 80px 24px; text-align: center; }
-    .contact h2 { font-size: 36px; font-weight: 800; margin-bottom: 16px; }
-    .contact p { color: #666; margin-bottom: 40px; font-size: 16px; }
-    .contact-form { display: flex; flex-direction: column; gap: 16px; text-align: left; }
-    .contact-form label { font-size: 14px; font-weight: 600; color: #333; }
-    .contact-form input, .contact-form select, .contact-form textarea { width: 100%; padding: 14px 16px; border: 1px solid #ddd; border-radius: 10px; font-size: 15px; font-family: inherit; transition: border 0.2s; }
-    .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { outline: none; border-color: #22c55e; }
-    .contact-form button { padding: 16px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
-    .contact-form button:hover { background: #22c55e; }
-
     /* Footer */
     footer { background: #1a1a1a; color: #fff; padding: 40px 24px; text-align: center; }
     footer p { color: #888; font-size: 14px; }
     footer a { color: #22c55e; text-decoration: none; }
+
+    /* Animations */
+    .fade-in { animation: fadeIn 0.3s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Responsive */
     @media (max-width: 900px) {
@@ -85,10 +149,16 @@
       .hero h1 { font-size: 36px; }
       .hero-badges { gap: 24px; }
       .nav-links { display: none; }
+      .cart-drawer { max-width: 100%; }
     }
     @media (max-width: 600px) {
       .features-grid { grid-template-columns: 1fr; }
       .hero-badges { flex-direction: column; gap: 16px; }
+      .nav-user { gap: 12px; }
+      .product-specs { gap: 4px; }
+      .spec { padding: 4px 8px; font-size: 11px; }
+      .thumbnail-nav { gap: 4px; }
+      .thumbnail { width: 40px; height: 40px; }
     }
   </style>
 </head>
@@ -101,10 +171,101 @@
       <div class="nav-links">
         <a href="#products">Products</a>
         <a href="#features">Why Us</a>
-        <a href="#order" class="nav-cta">Order Now</a>
+      </div>
+      <div class="nav-user">
+        <button class="cart-btn" onclick="toggleCart()">
+          🛒
+          <span class="cart-badge" id="cart-count">0</span>
+        </button>
+        
+        <!-- Show when not logged in -->
+        <div class="auth-links" id="auth-links">
+          <button class="auth-btn" onclick="showSignIn()">Sign In</button>
+          <button class="auth-btn primary" onclick="showSignUp()">Sign Up</button>
+        </div>
+        
+        <!-- Show when logged in -->
+        <div class="user-dropdown" id="user-dropdown" style="display: none;">
+          <button class="user-btn" id="user-name" onclick="toggleUserMenu()">Welcome, User!</button>
+          <div class="dropdown-menu" id="user-menu">
+            <a href="#" class="dropdown-item" onclick="signOut()">Sign Out</a>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
+
+  <!-- Auth Modals -->
+  <div class="modal" id="signin-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Sign In</h2>
+        <button class="modal-close" onclick="hideSignIn()">&times;</button>
+      </div>
+      <form id="signin-form">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="signin-email" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="signin-password" required>
+        </div>
+        <button type="submit" class="btn">Sign In</button>
+        <p class="text-center mt-16">
+          Don't have an account? <a href="#" class="text-link" onclick="switchToSignUp()">Sign up</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="signup-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Sign Up</h2>
+        <button class="modal-close" onclick="hideSignUp()">&times;</button>
+      </div>
+      <form id="signup-form">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" id="signup-name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="signup-email" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="signup-password" required minlength="6">
+        </div>
+        <button type="submit" class="btn">Sign Up</button>
+        <p class="text-center mt-16">
+          Already have an account? <a href="#" class="text-link" onclick="switchToSignIn()">Sign in</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Cart -->
+  <div class="cart-overlay" id="cart-overlay" onclick="hideCart()"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h2 class="cart-title">Shopping Cart</h2>
+      <button class="cart-close" onclick="hideCart()">&times;</button>
+    </div>
+    <div class="cart-content" id="cart-content">
+      <div class="cart-empty" id="cart-empty">
+        Your cart is empty
+      </div>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display: none;">
+      <div class="cart-total">
+        <span class="total-label">Total:</span>
+        <span class="total-amount" id="cart-total">$0</span>
+      </div>
+      <button class="btn checkout-btn" onclick="checkout()">Checkout with PayPal</button>
+    </div>
+  </div>
 
   <!-- Hero -->
   <section class="hero">
@@ -118,7 +279,7 @@
       </div>
       <div class="badge">
         <div class="num">UL</div>
-        <div class="label">Safety Certified</div>
+        <div class="label">UL2272 Certified</div>
       </div>
       <div class="badge">
         <div class="num">30</div>
@@ -140,31 +301,52 @@
       
       <!-- Z85F -->
       <div class="product-card">
-        <img class="product-img" src="https://img.staticdj.com/68efa7cb7de2cb5decf0655f0858be33_750x.png" alt="G-Cycle Z85F Electric Scooter">
+        <div class="product-gallery">
+          <img class="main-image" id="z85f-main" src="https://img.staticdj.com/68efa7cb7de2cb5decf0655f0858be33_750x.png" alt="G-Cycle Z85F Electric Scooter">
+          <div class="thumbnail-nav">
+            <img class="thumbnail active" src="https://img.staticdj.com/68efa7cb7de2cb5decf0655f0858be33_750x.png" onclick="changeImage('z85f', 0)" alt="Z85F Image 1">
+            <img class="thumbnail" src="https://img.staticdj.com/9662c14fba4f50ee5ddc8715b7faeb17_750x.png" onclick="changeImage('z85f', 1)" alt="Z85F Image 2">
+            <img class="thumbnail" src="https://img.staticdj.com/5c8da533ebf13362aa357b1927f71460_750x.png" onclick="changeImage('z85f', 2)" alt="Z85F Image 3">
+            <img class="thumbnail" src="https://img.staticdj.com/c97221444b48cfea25dced0594685271_750x.png" onclick="changeImage('z85f', 3)" alt="Z85F Image 4">
+            <img class="thumbnail" src="https://img.staticdj.com/0d9a78fb6010f341632ff9c563875cc3_750x.png" onclick="changeImage('z85f', 4)" alt="Z85F Image 5">
+            <img class="thumbnail" src="https://img.staticdj.com/58549b9f6eac92d5c641eee686957de7_750x.png" onclick="changeImage('z85f', 5)" alt="Z85F Image 6">
+          </div>
+        </div>
         <div class="product-info">
           <div class="product-name">G-Cycle Z85F</div>
-          <div class="product-tagline">Lightweight city commuter. Foldable, fast, and fun.</div>
+          <div class="product-tagline">Lightweight city commuter. Foldable, fast, and fun. Max 500W Motor, Up to 18.6 Miles Long Range, 15.5 MPH Top Speed, 8.5'' Honeycomb Tires, Dual Brake System.</div>
           <div class="product-specs">
             <span class="spec">500W Motor</span>
             <span class="spec">18.6 mi Range</span>
             <span class="spec">15.5 MPH</span>
             <span class="spec">8.5" Tires</span>
+            <span class="spec">UL2272 Certified</span>
           </div>
           <div class="product-price">
             <span class="price-current">$299</span>
             <span class="price-original">$349</span>
             <span class="price-save">Save $50</span>
           </div>
-          <a href="https://paypal.me/lincolnsscooter/299" target="_blank" class="product-btn">Pay with PayPal — $299</a>
+          <button class="add-to-cart-btn" onclick="addToCart('z85f', 'G-Cycle Z85F', 299, 'https://img.staticdj.com/68efa7cb7de2cb5decf0655f0858be33_750x.png')">Add to Cart</button>
         </div>
       </div>
 
       <!-- Atomi Alpha Lite -->
       <div class="product-card">
-        <img class="product-img" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_5_1800x1800.png?v=1718443545" alt="Atomi Alpha Lite Electric Scooter">
+        <div class="product-gallery">
+          <img class="main-image" id="alpha-main" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_5_1800x1800.png" alt="Atomi Alpha Lite Electric Scooter">
+          <div class="thumbnail-nav">
+            <img class="thumbnail active" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_5_1800x1800.png" onclick="changeImage('alpha', 0)" alt="Alpha Image 1">
+            <img class="thumbnail" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_1_1800x1800.png" onclick="changeImage('alpha', 1)" alt="Alpha Image 2">
+            <img class="thumbnail" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_4_1800x1800.png" onclick="changeImage('alpha', 2)" alt="Alpha Image 3">
+            <img class="thumbnail" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_6_1800x1800.png" onclick="changeImage('alpha', 3)" alt="Alpha Image 4">
+            <img class="thumbnail" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_2_1800x1800.png" onclick="changeImage('alpha', 4)" alt="Alpha Image 5">
+            <img class="thumbnail" src="https://www.atomiscooters.com/cdn/shop/files/Z9L_1800x1800.png" onclick="changeImage('alpha', 5)" alt="Alpha Image 6">
+          </div>
+        </div>
         <div class="product-info">
           <div class="product-name">Atomi Alpha Lite</div>
-          <div class="product-tagline">Best value. Tubeless tires, app control, long range.</div>
+          <div class="product-tagline">Best value. Tubeless tires, app control, long range. 25 miles range, 6 hour charge, up to 265lbs load.</div>
           <div class="product-specs">
             <span class="spec">25 mi Range</span>
             <span class="spec">Tubeless Tires</span>
@@ -176,28 +358,38 @@
             <span class="price-original">$549</span>
             <span class="price-save">Save $260</span>
           </div>
-          <a href="https://paypal.me/lincolnsscooter/289" target="_blank" class="product-btn">Pay with PayPal — $289</a>
+          <button class="add-to-cart-btn" onclick="addToCart('alpha', 'Atomi Alpha Lite', 289, 'https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_5_1800x1800.png')">Add to Cart</button>
         </div>
       </div>
 
       <!-- Z14 -->
       <div class="product-card">
-        <img class="product-img" src="https://img.fantaskycdn.com/ac709f17e72605f8825569bdb4c060e8_750x.png" alt="G-Cycle Z14 Electric Scooter with Seat">
+        <div class="product-gallery">
+          <img class="main-image" id="z14-main" src="https://img.staticdj.com/ac709f17e72605f8825569bdb4c060e8_750x.png" alt="G-Cycle Z14 Electric Scooter with Seat">
+          <div class="thumbnail-nav">
+            <img class="thumbnail active" src="https://img.staticdj.com/ac709f17e72605f8825569bdb4c060e8_750x.png" onclick="changeImage('z14', 0)" alt="Z14 Image 1">
+            <img class="thumbnail" src="https://img.staticdj.com/e699c9060409cd63158ebaf3b881027a_750x.png" onclick="changeImage('z14', 1)" alt="Z14 Image 2">
+            <img class="thumbnail" src="https://img.staticdj.com/b4602a73b3661486a6d16e119c40685b_750x.png" onclick="changeImage('z14', 2)" alt="Z14 Image 3">
+            <img class="thumbnail" src="https://img.staticdj.com/67c6eb1289c0a3a0d29dff60ee1ce354_750x.png" onclick="changeImage('z14', 3)" alt="Z14 Image 4">
+            <img class="thumbnail" src="https://img.staticdj.com/311bb294b0f7ae82c3bd57a384cc7429_750x.png" onclick="changeImage('z14', 4)" alt="Z14 Image 5">
+            <img class="thumbnail" src="https://img.staticdj.com/9332ed3c53ddcfc96579a62c1fa2a6f0_750x.png" onclick="changeImage('z14', 5)" alt="Z14 Image 6">
+          </div>
+        </div>
         <div class="product-info">
           <div class="product-name">G-Cycle Z14</div>
-          <div class="product-tagline">The premium choice. Seat, basket, big wheels, max comfort.</div>
+          <div class="product-tagline">The premium choice. Seat, basket, big wheels, max comfort. 800W Peak Motor, 27 Miles Range, Dual Brakes & Suspension, LCD Display, Foldable with Seat and Basket.</div>
           <div class="product-specs">
             <span class="spec">800W Motor</span>
             <span class="spec">27 mi Range</span>
             <span class="spec">14" Tires</span>
-            <span class="spec">With Seat</span>
+            <span class="spec">With Seat & Basket</span>
           </div>
           <div class="product-price">
             <span class="price-current">$599</span>
             <span class="price-original">$649</span>
             <span class="price-save">Save $50</span>
           </div>
-          <a href="https://paypal.me/lincolnsscooter/599" target="_blank" class="product-btn">Pay with PayPal — $599</a>
+          <button class="add-to-cart-btn" onclick="addToCart('z14', 'G-Cycle Z14', 599, 'https://img.staticdj.com/ac709f17e72605f8825569bdb4c060e8_750x.png')">Add to Cart</button>
         </div>
       </div>
 
@@ -221,30 +413,14 @@
       </div>
       <div class="feature">
         <div class="feature-icon">🛡️</div>
-        <h3>UL Certified</h3>
-        <p>UL2272 safety tested. Dual braking systems. Ride with confidence.</p>
+        <h3>UL2272 Certified</h3>
+        <p>Safety tested. Dual braking systems. Ride with confidence and peace of mind.</p>
       </div>
       <div class="feature">
         <div class="feature-icon">💰</div>
         <h3>Best Prices</h3>
-        <p>Factory-direct pricing. Save up to $260 compared to retail.</p>
+        <p>Factory-direct pricing. Save up to $260 compared to retail stores.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- Order Section -->
-  <section class="contact" id="order">
-    <h2>Ready to Ride?</h2>
-    <p>Choose your scooter above and pay securely with PayPal.<br>After payment, email us your shipping address.</p>
-    <div style="display:flex; flex-direction:column; gap:16px; margin: 30px 0;">
-      <a href="https://paypal.me/lincolnsscooter/299" target="_blank" class="product-btn" style="max-width:400px;margin:0 auto;">G-Cycle Z85F — Pay $299</a>
-      <a href="https://paypal.me/lincolnsscooter/289" target="_blank" class="product-btn" style="max-width:400px;margin:0 auto;">Atomi Alpha Lite — Pay $289</a>
-      <a href="https://paypal.me/lincolnsscooter/599" target="_blank" class="product-btn" style="max-width:400px;margin:0 auto;">G-Cycle Z14 — Pay $599</a>
-    </div>
-    <p style="color:#888; font-size:14px; margin-top:20px;">📧 After payment, email your order details and shipping address to:<br><a href="mailto:support@lincolnsscooter.com" style="color:#22c55e; font-weight:600;">support@lincolnsscooter.com</a></p>
-    <div style="display:flex; gap:16px; justify-content:center; margin-top:30px; flex-wrap:wrap;">
-      <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" alt="PayPal" style="height:40px; border-radius:6px;">
-      <div style="display:flex; align-items:center; gap:8px; background:#f0f0f0; padding:8px 16px; border-radius:8px; font-size:13px; font-weight:600; color:#555;">🔒 Secure Payment</div>
     </div>
   </section>
 
@@ -254,12 +430,316 @@
   </footer>
 
   <script>
-    // Smooth scroll for nav links
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) { e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
+    // Product image data
+    const productImages = {
+      z85f: [
+        'https://img.staticdj.com/68efa7cb7de2cb5decf0655f0858be33_750x.png',
+        'https://img.staticdj.com/9662c14fba4f50ee5ddc8715b7faeb17_750x.png',
+        'https://img.staticdj.com/5c8da533ebf13362aa357b1927f71460_750x.png',
+        'https://img.staticdj.com/c97221444b48cfea25dced0594685271_750x.png',
+        'https://img.staticdj.com/0d9a78fb6010f341632ff9c563875cc3_750x.png',
+        'https://img.staticdj.com/58549b9f6eac92d5c641eee686957de7_750x.png'
+      ],
+      alpha: [
+        'https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_5_1800x1800.png',
+        'https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_1_1800x1800.png',
+        'https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_4_1800x1800.png',
+        'https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_6_1800x1800.png',
+        'https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_2_1800x1800.png',
+        'https://www.atomiscooters.com/cdn/shop/files/Z9L_1800x1800.png'
+      ],
+      z14: [
+        'https://img.staticdj.com/ac709f17e72605f8825569bdb4c060e8_750x.png',
+        'https://img.staticdj.com/e699c9060409cd63158ebaf3b881027a_750x.png',
+        'https://img.staticdj.com/b4602a73b3661486a6d16e119c40685b_750x.png',
+        'https://img.staticdj.com/67c6eb1289c0a3a0d29dff60ee1ce354_750x.png',
+        'https://img.staticdj.com/311bb294b0f7ae82c3bd57a384cc7429_750x.png',
+        'https://img.staticdj.com/9332ed3c53ddcfc96579a62c1fa2a6f0_750x.png'
+      ]
+    };
+
+    // User authentication
+    let currentUser = null;
+
+    // Check if user is logged in on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+      if (user) {
+        setCurrentUser(user);
+      }
+      updateCartDisplay();
+      
+      // Smooth scroll for nav links
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+          const target = document.querySelector(a.getAttribute('href'));
+          if (target) { 
+            e.preventDefault(); 
+            target.scrollIntoView({behavior:'smooth'}); 
+          }
+        });
       });
+    });
+
+    function setCurrentUser(user) {
+      currentUser = user;
+      document.getElementById('auth-links').style.display = 'none';
+      document.getElementById('user-dropdown').style.display = 'block';
+      document.getElementById('user-name').textContent = `Welcome, ${user.name}!`;
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    }
+
+    function clearCurrentUser() {
+      currentUser = null;
+      document.getElementById('auth-links').style.display = 'flex';
+      document.getElementById('user-dropdown').style.display = 'none';
+      localStorage.removeItem('currentUser');
+    }
+
+    // Image gallery functions
+    function changeImage(product, index) {
+      const mainImage = document.getElementById(`${product}-main`);
+      const thumbnails = document.querySelectorAll(`#${product === 'z85f' ? 'z85f' : product === 'alpha' ? 'alpha' : 'z14'}-main`).length > 0 ? 
+        document.querySelector(`#${product === 'z85f' ? 'z85f' : product === 'alpha' ? 'alpha' : 'z14'}-main`).parentNode.querySelectorAll('.thumbnail') :
+        [];
+      
+      // Update main image
+      mainImage.src = productImages[product][index];
+      
+      // Update thumbnail active state
+      thumbnails.forEach((thumb, i) => {
+        if (i === index) {
+          thumb.classList.add('active');
+        } else {
+          thumb.classList.remove('active');
+        }
+      });
+    }
+
+    // Auth functions
+    function showSignIn() {
+      document.getElementById('signin-modal').classList.add('show');
+    }
+
+    function hideSignIn() {
+      document.getElementById('signin-modal').classList.remove('show');
+    }
+
+    function showSignUp() {
+      document.getElementById('signup-modal').classList.add('show');
+    }
+
+    function hideSignUp() {
+      document.getElementById('signup-modal').classList.remove('show');
+    }
+
+    function switchToSignUp() {
+      hideSignIn();
+      showSignUp();
+    }
+
+    function switchToSignIn() {
+      hideSignUp();
+      showSignIn();
+    }
+
+    function toggleUserMenu() {
+      const menu = document.getElementById('user-menu');
+      menu.classList.toggle('show');
+    }
+
+    function signOut() {
+      clearCurrentUser();
+      document.getElementById('user-menu').classList.remove('show');
+      // Clear cart on sign out (optional)
+      localStorage.removeItem('cart');
+      updateCartDisplay();
+    }
+
+    // Sign up form handler
+    document.getElementById('signup-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('signup-name').value;
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      
+      // Store user (in real app, this would go to a backend)
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      
+      // Check if user already exists
+      if (users.find(u => u.email === email)) {
+        alert('User with this email already exists!');
+        return;
+      }
+      
+      const newUser = { id: Date.now(), name, email, password };
+      users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(users));
+      
+      setCurrentUser(newUser);
+      hideSignUp();
+      
+      // Reset form
+      document.getElementById('signup-form').reset();
+    });
+
+    // Sign in form handler
+    document.getElementById('signin-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('signin-email').value;
+      const password = document.getElementById('signin-password').value;
+      
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.email === email && u.password === password);
+      
+      if (user) {
+        setCurrentUser(user);
+        hideSignIn();
+        document.getElementById('signin-form').reset();
+      } else {
+        alert('Invalid email or password!');
+      }
+    });
+
+    // Shopping cart
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    function addToCart(id, name, price, image) {
+      const existingItem = cart.find(item => item.id === id);
+      
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ id, name, price, image, quantity: 1 });
+      }
+      
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartDisplay();
+      
+      // Show feedback
+      const button = event.target;
+      const originalText = button.textContent;
+      button.textContent = 'Added!';
+      button.style.background = '#22c55e';
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.style.background = '';
+      }, 1000);
+    }
+
+    function removeFromCart(id) {
+      cart = cart.filter(item => item.id !== id);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartDisplay();
+    }
+
+    function updateQuantity(id, change) {
+      const item = cart.find(item => item.id === id);
+      if (item) {
+        item.quantity += change;
+        if (item.quantity <= 0) {
+          removeFromCart(id);
+        } else {
+          localStorage.setItem('cart', JSON.stringify(cart));
+          updateCartDisplay();
+        }
+      }
+    }
+
+    function updateCartDisplay() {
+      const cartCount = document.getElementById('cart-count');
+      const cartContent = document.getElementById('cart-content');
+      const cartEmpty = document.getElementById('cart-empty');
+      const cartFooter = document.getElementById('cart-footer');
+      const cartTotal = document.getElementById('cart-total');
+      
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      
+      cartCount.textContent = totalItems;
+      cartTotal.textContent = `$${totalPrice}`;
+      
+      if (cart.length === 0) {
+        cartEmpty.style.display = 'block';
+        cartFooter.style.display = 'none';
+        cartContent.innerHTML = '<div class="cart-empty">Your cart is empty</div>';
+      } else {
+        cartEmpty.style.display = 'none';
+        cartFooter.style.display = 'block';
+        
+        cartContent.innerHTML = cart.map(item => `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+            <div class="cart-item-info">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-price">$${item.price}</div>
+              <div class="cart-item-controls">
+                <button class="qty-btn" onclick="updateQuantity('${item.id}', -1)" ${item.quantity <= 1 ? 'disabled' : ''}>−</button>
+                <span class="cart-item-qty">${item.quantity}</span>
+                <button class="qty-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
+                <a href="#" class="remove-btn" onclick="removeFromCart('${item.id}')">Remove</a>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function toggleCart() {
+      const cartDrawer = document.getElementById('cart-drawer');
+      const cartOverlay = document.getElementById('cart-overlay');
+      
+      cartDrawer.classList.toggle('show');
+      cartOverlay.classList.toggle('show');
+    }
+
+    function hideCart() {
+      document.getElementById('cart-drawer').classList.remove('show');
+      document.getElementById('cart-overlay').classList.remove('show');
+    }
+
+    function checkout() {
+      if (cart.length === 0) return;
+      
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const paypalUrl = `https://paypal.me/lincolnsscooter/${total}`;
+      window.open(paypalUrl, '_blank');
+      
+      // Optionally clear cart after checkout
+      // cart = [];
+      // localStorage.setItem('cart', JSON.stringify(cart));
+      // updateCartDisplay();
+      // hideCart();
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      const userDropdown = document.getElementById('user-dropdown');
+      const userMenu = document.getElementById('user-menu');
+      
+      if (!userDropdown.contains(e.target)) {
+        userMenu.classList.remove('show');
+      }
+      
+      // Close modals when clicking outside
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => {
+        if (e.target === modal) {
+          modal.classList.remove('show');
+        }
+      });
+    });
+
+    // ESC key to close modals
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal.show').forEach(modal => {
+          modal.classList.remove('show');
+        });
+        hideCart();
+      }
     });
   </script>
 
