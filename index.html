@@ -121,6 +121,25 @@
     .price-current { font-size: 28px; font-weight: 800; color: #1a1a1a; }
     .price-original { font-size: 16px; color: #bbb; text-decoration: line-through; }
     .price-save { font-size: 13px; font-weight: 600; color: #22c55e; background: #ecfdf5; padding: 4px 10px; border-radius: 6px; }
+    /* Checkout Modal */
+    .checkout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
+    .checkout-box { background: #fff; border-radius: 16px; max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 32px; position: relative; }
+    .checkout-box h2 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+    .checkout-box .checkout-sub { color: #888; font-size: 14px; margin-bottom: 24px; }
+    .checkout-box .form-row { display: flex; gap: 12px; }
+    .checkout-box .form-row > div { flex: 1; }
+    .checkout-box label { display: block; font-size: 13px; font-weight: 600; color: #333; margin-bottom: 4px; margin-top: 12px; }
+    .checkout-box input, .checkout-box select { width: 100%; padding: 12px 14px; border: 1px solid #ddd; border-radius: 10px; font-size: 14px; font-family: inherit; transition: border 0.2s; }
+    .checkout-box input:focus, .checkout-box select:focus { outline: none; border-color: #22c55e; }
+    .checkout-box .order-summary { background: #f8f8f8; border-radius: 10px; padding: 16px; margin: 20px 0; }
+    .checkout-box .order-summary .summary-item { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+    .checkout-box .order-summary .summary-total { display: flex; justify-content: space-between; font-size: 18px; font-weight: 700; border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px; }
+    .checkout-box .checkout-submit { width: 100%; padding: 16px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 20px; transition: background 0.2s; }
+    .checkout-box .checkout-submit:hover { background: #22c55e; }
+    .checkout-box .checkout-close { position: absolute; top: 16px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer; color: #999; }
+    .checkout-box .paypal-note { text-align: center; margin-top: 12px; font-size: 13px; color: #888; }
+    .checkout-box .paypal-note img { height: 24px; vertical-align: middle; margin-left: 6px; }
+
     .add-to-cart-btn { display: block; width: 100%; padding: 14px; background: #22c55e; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; transition: all 0.2s; }
     .add-to-cart-btn:hover { background: #16a34a; transform: translateY(-1px); }
     .add-to-cart-btn:active { transform: translateY(0); }
@@ -429,6 +448,47 @@
     <p>© 2026 Lincoln's Scooter. Ships from the USA. <a href="mailto:support@lincolnsscooter.com">support@lincolnsscooter.com</a></p>
   </footer>
 
+  <!-- Checkout Modal -->
+  <div class="checkout-modal" id="checkout-modal">
+    <div class="checkout-box">
+      <button class="checkout-close" onclick="closeCheckout()">&times;</button>
+      <h2>Shipping Information</h2>
+      <p class="checkout-sub">Enter your details to complete the order</p>
+      <div class="order-summary" id="checkout-summary"></div>
+      <form onsubmit="submitOrder(event)">
+        <label for="checkout-name">Full Name *</label>
+        <input type="text" id="checkout-name" required placeholder="John Doe">
+        
+        <label for="checkout-email">Email *</label>
+        <input type="email" id="checkout-email" required placeholder="john@example.com">
+        
+        <label for="checkout-phone">Phone *</label>
+        <input type="tel" id="checkout-phone" required placeholder="(555) 123-4567">
+        
+        <label for="checkout-address">Street Address *</label>
+        <input type="text" id="checkout-address" required placeholder="123 Main St, Apt 4">
+        
+        <div class="form-row">
+          <div>
+            <label for="checkout-city">City *</label>
+            <input type="text" id="checkout-city" required placeholder="Omaha">
+          </div>
+          <div>
+            <label for="checkout-state">State *</label>
+            <input type="text" id="checkout-state" required placeholder="NE" maxlength="2">
+          </div>
+          <div>
+            <label for="checkout-zip">ZIP *</label>
+            <input type="text" id="checkout-zip" required placeholder="68102">
+          </div>
+        </div>
+        
+        <button type="submit" class="checkout-submit">Complete Order & Pay with PayPal →</button>
+        <div class="paypal-note">🔒 Secure payment via <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" alt="PayPal"></div>
+      </form>
+    </div>
+  </div>
+
   <script>
     // Product image data
     const productImages = {
@@ -704,16 +764,73 @@
 
     function checkout() {
       if (cart.length === 0) return;
+      hideCart();
       
+      // Populate order summary
       const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const summaryEl = document.getElementById('checkout-summary');
+      summaryEl.innerHTML = cart.map(item => 
+        `<div class="summary-item"><span>${item.name} × ${item.quantity}</span><span>$${item.price * item.quantity}</span></div>`
+      ).join('') + `<div class="summary-total"><span>Total</span><span>$${total}</span></div>`;
+      
+      // Pre-fill from user account if logged in
+      const user = JSON.parse(localStorage.getItem('user') || 'null');
+      if (user) {
+        const nameEl = document.getElementById('checkout-name');
+        const emailEl = document.getElementById('checkout-email');
+        if (nameEl && !nameEl.value) nameEl.value = user.name || '';
+        if (emailEl && !emailEl.value) emailEl.value = user.email || '';
+      }
+      
+      document.getElementById('checkout-modal').style.display = 'flex';
+    }
+
+    function closeCheckout() {
+      document.getElementById('checkout-modal').style.display = 'none';
+    }
+
+    function submitOrder(e) {
+      e.preventDefault();
+      const form = e.target;
+      const name = form.querySelector('#checkout-name').value;
+      const email = form.querySelector('#checkout-email').value;
+      const phone = form.querySelector('#checkout-phone').value;
+      const address = form.querySelector('#checkout-address').value;
+      const city = form.querySelector('#checkout-city').value;
+      const state = form.querySelector('#checkout-state').value;
+      const zip = form.querySelector('#checkout-zip').value;
+
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const items = cart.map(item => `${item.name} x${item.quantity} ($${item.price * item.quantity})`).join(', ');
+
+      // Save order to localStorage
+      const order = { name, email, phone, address: `${address}, ${city}, ${state} ${zip}`, items, total, date: new Date().toISOString() };
+      const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+      orders.push(order);
+      localStorage.setItem('orders', JSON.stringify(orders));
+
+      // Send order details via mailto as backup
+      const subject = encodeURIComponent('New Order - Lincoln\'s Scooter - $' + total);
+      const body = encodeURIComponent(
+        'Order Details:\n' + items + '\nTotal: $' + total + '\n\n' +
+        'Customer: ' + name + '\nEmail: ' + email + '\nPhone: ' + phone + '\n' +
+        'Ship to: ' + address + ', ' + city + ', ' + state + ' ' + zip
+      );
+
+      // Open PayPal payment
       const paypalUrl = `https://paypal.me/lincolnsscooter/${total}`;
       window.open(paypalUrl, '_blank');
+
+      // Send email notification
+      window.open('mailto:support@lincolnsscooter.com?subject=' + subject + '&body=' + body, '_self');
+
+      // Clear cart
+      cart = [];
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartDisplay();
+      closeCheckout();
       
-      // Optionally clear cart after checkout
-      // cart = [];
-      // localStorage.setItem('cart', JSON.stringify(cart));
-      // updateCartDisplay();
-      // hideCart();
+      alert('Thank you for your order! Please complete the PayPal payment in the new tab. We will ship to your address once payment is confirmed.');
     }
 
     // Close dropdowns when clicking outside
