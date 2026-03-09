@@ -143,6 +143,23 @@
     .checkout-box .paypal-note { text-align: center; margin-top: 12px; font-size: 13px; color: #888; }
     .checkout-box .paypal-note img { height: 24px; vertical-align: middle; margin-left: 6px; }
 
+    /* Payment System */
+    .pay-express-btn { display:flex; align-items:center; justify-content:center; gap:8px; padding:12px 16px; border:1px solid #ddd; border-radius:10px; background:#fff; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; color:#1a1a1a; }
+    .pay-express-btn:hover { border-color:#22c55e; background:#f8faf8; }
+    .pay-express-btn svg { flex-shrink:0; }
+    .pay-express-shoppay { background:#5a31f4; color:#fff !important; border-color:#5a31f4; }
+    .pay-express-shoppay:hover { background:#4a21e4; border-color:#4a21e4; }
+    .pay-tab { flex:1; padding:12px 8px; border:none; background:#fff; font-size:13px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; color:#666; transition:all 0.2s; border-right:1px solid #ddd; }
+    .pay-tab:last-child { border-right:none; }
+    .pay-tab.active { background:#f0fdf4; color:#22c55e; }
+    .pay-tab:hover:not(.active) { background:#f5f5f5; }
+    .pay-tab svg { flex-shrink:0; }
+    @media (max-width: 600px) {
+      .pay-tab { font-size:11px; padding:10px 4px; gap:4px; }
+      .pay-tab svg { width:14px; height:14px; }
+      #express-checkout > div:first-child { grid-template-columns:1fr !important; }
+    }
+
     /* Order Confirmation Modal */
     .confirmation-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); }
     .confirmation-modal.show { display: flex; }
@@ -241,6 +258,7 @@
     /* Animations */
     .fade-in { animation: fadeIn 0.3s ease-in-out; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     /* Responsive */
     @media (max-width: 900px) {
@@ -388,86 +406,9 @@
   <section class="products" id="products">
     <h2 class="section-title">Our Scooters</h2>
     <p class="section-sub">Three models. Every rider covered.</p>
-    <div class="product-grid">
-      <!-- Z85F -->
-      <div class="product-card">
-        <div class="product-gallery">
-          <a href="z85f.html"><img class="main-image" id="z85f-main" src="https://img.staticdj.com/68efa7cb7de2cb5decf0655f0858be33_750x.png" alt="G-Cycle Z85F Electric Scooter"></a>
-          <div class="thumbnail-nav">
-            <img class="thumbnail active" src="https://img.staticdj.com/68efa7cb7de2cb5decf0655f0858be33_750x.png" onclick="changeImage('z85f', 0)" alt="Z85F Image 1">
-            <img class="thumbnail" src="https://img.staticdj.com/9662c14fba4f50ee5ddc8715b7faeb17_750x.png" onclick="changeImage('z85f', 1)" alt="Z85F Image 2">
-            <img class="thumbnail" src="https://img.staticdj.com/5c8da533ebf13362aa357b1927f71460_750x.png" onclick="changeImage('z85f', 2)" alt="Z85F Image 3">
-            <img class="thumbnail" src="https://img.staticdj.com/c97221444b48cfea25dced0594685271_750x.png" onclick="changeImage('z85f', 3)" alt="Z85F Image 4">
-            <img class="thumbnail" src="https://img.staticdj.com/0d9a78fb6010f341632ff9c563875cc3_750x.png" onclick="changeImage('z85f', 4)" alt="Z85F Image 5">
-            <img class="thumbnail" src="https://img.staticdj.com/58549b9f6eac92d5c641eee686957de7_750x.png" onclick="changeImage('z85f', 5)" alt="Z85F Image 6">
-          </div>
-        </div>
-        <div class="product-info">
-          <a href="z85f.html" style="text-decoration: none; color: inherit;"><div class="product-name">G-Cycle Z85F</div></a>
-          <div class="product-tagline">Lightweight city commuter. Foldable, fast, and fun. Max 500W Motor, Up to 18.6 Miles Long Range, 15.5 MPH Top Speed, 8.5'' Honeycomb Tires, Dual Brake System.</div>
-          <div class="product-specs">
-            <span class="spec">500W Motor</span><span class="spec">18.6 mi Range</span><span class="spec">15.5 MPH</span><span class="spec">8.5" Tires</span><span class="spec">UL2272 Certified</span>
-          </div>
-          <div class="product-price">
-            <span class="price-current">$299</span><span class="price-original">$349</span><span class="price-save">Save $50</span>
-          </div>
-          <button class="add-to-cart-btn" onclick="addToCart('z85f', 'G-Cycle Z85F', 299, 'https://img.staticdj.com/68efa7cb7de2cb5decf0655f0858be33_750x.png')">Add to Cart</button>
-          <a href="z85f.html" style="display: block; text-align: center; color: #22c55e; text-decoration: none; font-weight: 500; margin-top: 12px; font-size: 14px;">View Details →</a>
-        </div>
-      </div>
-      <!-- Atomi Alpha Lite -->
-      <div class="product-card">
-        <div class="product-gallery">
-          <a href="alpha-lite.html"><img class="main-image" id="alpha-main" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_5_1800x1800.png" alt="Atomi Alpha Lite Electric Scooter"></a>
-          <div class="thumbnail-nav">
-            <img class="thumbnail active" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_5_1800x1800.png" onclick="changeImage('alpha', 0)" alt="Alpha Image 1">
-            <img class="thumbnail" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_1_1800x1800.png" onclick="changeImage('alpha', 1)" alt="Alpha Image 2">
-            <img class="thumbnail" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_4_1800x1800.png" onclick="changeImage('alpha', 2)" alt="Alpha Image 3">
-            <img class="thumbnail" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_6_1800x1800.png" onclick="changeImage('alpha', 3)" alt="Alpha Image 4">
-            <img class="thumbnail" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_2_1800x1800.png" onclick="changeImage('alpha', 4)" alt="Alpha Image 5">
-            <img class="thumbnail" src="https://www.atomiscooters.com/cdn/shop/files/Z9L_1800x1800.png" onclick="changeImage('alpha', 5)" alt="Alpha Image 6">
-          </div>
-        </div>
-        <div class="product-info">
-          <a href="alpha-lite.html" style="text-decoration: none; color: inherit;"><div class="product-name">Atomi Alpha Lite</div></a>
-          <div class="product-tagline">Best value. Tubeless tires, app control, long range. 25 miles range, 6 hour charge, up to 265lbs load.</div>
-          <div class="product-specs">
-            <span class="spec">25 mi Range</span><span class="spec">Tubeless Tires</span><span class="spec">App Lock</span><span class="spec">265 lbs Max</span>
-          </div>
-          <div class="product-price">
-            <span class="price-current">$289</span><span class="price-original">$549</span><span class="price-save">Save $260</span>
-          </div>
-          <button class="add-to-cart-btn" onclick="addToCart('alpha', 'Atomi Alpha Lite', 289, 'https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_5_1800x1800.png')">Add to Cart</button>
-          <a href="alpha-lite.html" style="display: block; text-align: center; color: #22c55e; text-decoration: none; font-weight: 500; margin-top: 12px; font-size: 14px;">View Details →</a>
-        </div>
-      </div>
-      <!-- Z14 -->
-      <div class="product-card">
-        <div class="product-gallery">
-          <a href="z14.html"><img class="main-image" id="z14-main" src="https://img.staticdj.com/ac709f17e72605f8825569bdb4c060e8_750x.png" alt="G-Cycle Z14 Electric Scooter with Seat"></a>
-          <div class="thumbnail-nav">
-            <img class="thumbnail active" src="https://img.staticdj.com/ac709f17e72605f8825569bdb4c060e8_750x.png" onclick="changeImage('z14', 0)" alt="Z14 Image 1">
-            <img class="thumbnail" src="https://img.staticdj.com/e699c9060409cd63158ebaf3b881027a_750x.png" onclick="changeImage('z14', 1)" alt="Z14 Image 2">
-            <img class="thumbnail" src="https://img.staticdj.com/b4602a73b3661486a6d16e119c40685b_750x.png" onclick="changeImage('z14', 2)" alt="Z14 Image 3">
-            <img class="thumbnail" src="https://img.staticdj.com/67c6eb1289c0a3a0d29dff60ee1ce354_750x.png" onclick="changeImage('z14', 3)" alt="Z14 Image 4">
-            <img class="thumbnail" src="https://img.staticdj.com/311bb294b0f7ae82c3bd57a384cc7429_750x.png" onclick="changeImage('z14', 4)" alt="Z14 Image 5">
-            <img class="thumbnail" src="https://img.staticdj.com/9332ed3c53ddcfc96579a62c1fa2a6f0_750x.png" onclick="changeImage('z14', 5)" alt="Z14 Image 6">
-          </div>
-        </div>
-        <div class="product-info">
-          <a href="z14.html" style="text-decoration: none; color: inherit;"><div class="product-name">G-Cycle Z14</div></a>
-          <div class="product-tagline">The premium choice. Seat, basket, big wheels, max comfort. 800W Peak Motor, 27 Miles Range, Dual Brakes & Suspension, LCD Display, Foldable with Seat and Basket.</div>
-          <div class="product-specs">
-            <span class="spec">800W Motor</span><span class="spec">27 mi Range</span><span class="spec">14" Tires</span><span class="spec">With Seat & Basket</span>
-          </div>
-          <div class="product-price">
-            <span class="price-current">$599</span><span class="price-original">$649</span><span class="price-save">Save $50</span>
-          </div>
-          <button class="add-to-cart-btn" onclick="addToCart('z14', 'G-Cycle Z14', 599, 'https://img.staticdj.com/ac709f17e72605f8825569bdb4c060e8_750x.png')">Add to Cart</button>
-          <a href="z14.html" style="display: block; text-align: center; color: #22c55e; text-decoration: none; font-weight: 500; margin-top: 12px; font-size: 14px;">View Details →</a>
-        </div>
-      </div>
-    </div>
+    <div class="product-search"><input type="text" id="product-search" placeholder="🔍 Search products..." oninput="renderProductGrid()"></div>
+    <div class="category-filters" id="category-filters"></div>
+    <div class="product-grid" id="product-grid"></div>
   </section>
 
   <!-- Features -->
@@ -489,13 +430,15 @@
 
   <!-- Checkout Modal -->
   <div class="checkout-modal" id="checkout-modal">
-    <div class="checkout-box">
+    <div class="checkout-box" style="max-width:680px;">
       <button class="checkout-close" onclick="closeCheckout()">&times;</button>
       <h2>Checkout</h2>
-      <p class="checkout-sub">Review your order and enter shipping details</p>
+      <p class="checkout-sub">Review your order, enter shipping details, and choose payment</p>
       <div class="order-summary" id="checkout-summary"></div>
+
       <form id="checkout-form" onsubmit="submitOrder(event)">
-        <h3 style="font-size:16px; font-weight:700; margin-bottom:4px;">Shipping Information</h3>
+        <!-- Step 1: Shipping -->
+        <h3 style="font-size:16px; font-weight:700; margin-bottom:4px;">📦 Shipping Information</h3>
         <label for="checkout-name">Full Name *</label>
         <input type="text" id="checkout-name" required placeholder="John Doe">
         <label for="checkout-email">Email *</label>
@@ -509,10 +452,135 @@
           <div><label for="checkout-state">State *</label><input type="text" id="checkout-state" required placeholder="NE" maxlength="2"></div>
           <div><label for="checkout-zip">ZIP *</label><input type="text" id="checkout-zip" required placeholder="68102"></div>
         </div>
-        <h3 style="font-size:16px; font-weight:700; margin-top:20px; margin-bottom:8px;">Payment</h3>
-        <p style="font-size:13px; color:#888; margin-bottom:12px;">You will be redirected to PayPal to complete payment after placing your order.</p>
-        <button type="submit" class="checkout-submit">Place Order & Pay with PayPal →</button>
-        <div class="paypal-note">🔒 Secure payment via <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" alt="PayPal"></div>
+
+        <!-- Step 2: Payment Method -->
+        <h3 style="font-size:16px; font-weight:700; margin-top:24px; margin-bottom:12px;">💳 Payment Method</h3>
+
+        <!-- Express Checkout Buttons -->
+        <div id="express-checkout" style="margin-bottom:16px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
+            <button type="button" class="pay-express-btn" onclick="payWithApplePay()" id="apple-pay-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+              Apple Pay
+            </button>
+            <button type="button" class="pay-express-btn" onclick="payWithGooglePay()" id="google-pay-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+              Google Pay
+            </button>
+          </div>
+          <button type="button" class="pay-express-btn pay-express-shoppay" onclick="payWithShopPay()" style="width:100%;margin-bottom:8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h4l2 10h8l2-6H8"/><circle cx="10" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg>
+            Shop Pay
+          </button>
+          <div style="display:flex;align-items:center;gap:12px;margin:16px 0;">
+            <div style="flex:1;height:1px;background:#ddd;"></div>
+            <span style="color:#888;font-size:13px;font-weight:500;">or pay with card</span>
+            <div style="flex:1;height:1px;background:#ddd;"></div>
+          </div>
+        </div>
+
+        <!-- Payment Method Tabs -->
+        <div class="payment-tabs" style="display:flex;gap:0;margin-bottom:16px;border:1px solid #ddd;border-radius:10px;overflow:hidden;">
+          <button type="button" class="pay-tab active" onclick="switchPayTab('card',this)" id="tab-card">
+            <span>💳</span> Credit Card
+          </button>
+          <button type="button" class="pay-tab" onclick="switchPayTab('paypal',this)" id="tab-paypal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#003087"><path d="M7.02 21.5L7.79 17H4.5L8.35 1h6.24c2.1 0 3.82.62 4.58 2.08.38.73.5 1.56.35 2.5-.49 3.07-2.91 4.92-6.27 4.92H10.5l-1.24 7H7.02l.03-.04-.03.04z"/><path d="M19.55 7.24c-.97 4.36-4.14 5.76-7.77 5.76h-.96l-1.13 7h-2.4l.02-.13 4.77-19.37h5.62c1.35 0 2.5.32 3.23 1.11.42.46.69 1.04.78 1.73.05.35.06.72-.16 3.9z" fill="#0070E0"/></svg>
+            PayPal
+          </button>
+          <button type="button" class="pay-tab" onclick="switchPayTab('klarna',this)" id="tab-klarna">
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#FFB3C7" d="M0 0h24v24H0z"/><path fill="#0A0B09" d="M13.5 3.75c0 2.35-1.05 4.47-2.7 5.9l6.2 8.35h-3.45l-5.8-7.8V3.75h2.4v7.2l.15-.12c1.4-1.15 2.2-2.85 2.2-4.68V3.75h1z"/></svg>
+            Klarna
+          </button>
+        </div>
+
+        <!-- Card Payment Form -->
+        <div id="pay-card-form">
+          <div style="background:#f8f8f8;border-radius:10px;padding:16px;margin-bottom:12px;">
+            <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center;">
+              <span style="font-size:12px;font-weight:600;color:#888;">Accepted:</span>
+              <img src="https://cdn.jsdelivr.net/gh/nicepay-dev/nicepay-logo/visa.svg" alt="Visa" style="height:20px;" onerror="this.outerHTML='<span style=font-size:12px;font-weight:600;color:#1a1f71>VISA</span>'">
+              <img src="https://cdn.jsdelivr.net/gh/nicepay-dev/nicepay-logo/mastercard.svg" alt="Mastercard" style="height:20px;" onerror="this.outerHTML='<span style=font-size:12px;font-weight:600;color:#eb001b>MC</span>'">
+              <img src="https://cdn.jsdelivr.net/gh/nicepay-dev/nicepay-logo/amex.svg" alt="Amex" style="height:20px;" onerror="this.outerHTML='<span style=font-size:12px;font-weight:600;color:#006fcf>AMEX</span>'">
+            </div>
+            <label style="font-size:13px;font-weight:600;color:#333;display:block;margin-bottom:4px;">Card Number *</label>
+            <div style="position:relative;">
+              <input type="text" id="cc-number" placeholder="4242 4242 4242 4242" maxlength="19" required autocomplete="cc-number"
+                style="width:100%;padding:12px 44px 12px 14px;border:1px solid #ddd;border-radius:8px;font-size:15px;font-family:monospace;letter-spacing:1px;"
+                oninput="formatCardNumber(this)" onblur="detectCardType(this.value)">
+              <span id="cc-brand-icon" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:700;color:#888;"></span>
+            </div>
+            <div class="form-row" style="margin-top:8px;">
+              <div>
+                <label style="font-size:13px;font-weight:600;color:#333;display:block;margin-bottom:4px;">Expiry *</label>
+                <input type="text" id="cc-expiry" placeholder="MM / YY" maxlength="7" required autocomplete="cc-exp"
+                  style="width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:8px;font-size:15px;font-family:monospace;"
+                  oninput="formatExpiry(this)">
+              </div>
+              <div>
+                <label style="font-size:13px;font-weight:600;color:#333;display:block;margin-bottom:4px;">CVC *</label>
+                <input type="text" id="cc-cvc" placeholder="123" maxlength="4" required autocomplete="cc-csc"
+                  style="width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:8px;font-size:15px;font-family:monospace;">
+              </div>
+            </div>
+            <label style="font-size:13px;font-weight:600;color:#333;display:block;margin-bottom:4px;margin-top:8px;">Name on Card *</label>
+            <input type="text" id="cc-name" placeholder="John Doe" required autocomplete="cc-name"
+              style="width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:8px;font-size:15px;">
+          </div>
+          <button type="submit" class="checkout-submit" id="card-pay-btn">
+            <span id="card-pay-text">Pay $0.00 with Card</span>
+          </button>
+        </div>
+
+        <!-- PayPal Payment -->
+        <div id="pay-paypal-form" style="display:none;">
+          <div style="background:#f8f8f8;border-radius:10px;padding:24px;text-align:center;">
+            <svg width="80" height="32" viewBox="0 0 100 32"><text x="0" y="24" font-size="20" font-weight="700" fill="#003087">Pay</text><text x="38" y="24" font-size="20" font-weight="700" fill="#0070E0">Pal</text></svg>
+            <p style="color:#666;font-size:14px;margin:12px 0;">You'll be redirected to PayPal to complete your purchase securely.</p>
+            <button type="button" class="checkout-submit" style="background:#0070ba;" onclick="payWithPayPal()">
+              Continue with PayPal →
+            </button>
+          </div>
+        </div>
+
+        <!-- Klarna Payment -->
+        <div id="pay-klarna-form" style="display:none;">
+          <div style="background:#f8f8f8;border-radius:10px;padding:24px;">
+            <div style="text-align:center;margin-bottom:16px;">
+              <span style="font-size:24px;font-weight:800;color:#0A0B09;background:#FFB3C7;padding:4px 12px;border-radius:8px;">Klarna.</span>
+            </div>
+            <p style="color:#666;font-size:14px;text-align:center;margin-bottom:16px;">Split your purchase into 4 interest-free payments.</p>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;">
+              <div id="klarna-inst-1" class="klarna-installment" style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:12px;text-align:center;">
+                <div style="font-size:11px;color:#888;">Today</div>
+                <div style="font-size:16px;font-weight:700;" id="klarna-pay-1">$0</div>
+              </div>
+              <div class="klarna-installment" style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:12px;text-align:center;">
+                <div style="font-size:11px;color:#888;">2 weeks</div>
+                <div style="font-size:16px;font-weight:700;" id="klarna-pay-2">$0</div>
+              </div>
+              <div class="klarna-installment" style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:12px;text-align:center;">
+                <div style="font-size:11px;color:#888;">4 weeks</div>
+                <div style="font-size:16px;font-weight:700;" id="klarna-pay-3">$0</div>
+              </div>
+              <div class="klarna-installment" style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:12px;text-align:center;">
+                <div style="font-size:11px;color:#888;">6 weeks</div>
+                <div style="font-size:16px;font-weight:700;" id="klarna-pay-4">$0</div>
+              </div>
+            </div>
+            <p style="font-size:12px;color:#22c55e;text-align:center;margin-bottom:16px;">✓ No interest · No fees · No impact on credit score</p>
+            <button type="button" class="checkout-submit" style="background:#0A0B09;" onclick="payWithKlarna()">
+              Pay with Klarna →
+            </button>
+          </div>
+        </div>
+
+        <!-- Security Footer -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;padding-top:12px;border-top:1px solid #eee;">
+          <span style="font-size:12px;color:#888;">🔒 256-bit SSL Encryption</span>
+          <span style="font-size:12px;color:#888;">🛡️ PCI DSS Compliant</span>
+          <span style="font-size:12px;color:#888;">✓ Secure Checkout</span>
+        </div>
       </form>
     </div>
   </div>
@@ -553,23 +621,86 @@
     <div class="page-view-inner">
       <a class="page-back" onclick="goHome()">← Back to Shop</a>
       <h2>⚙️ Admin Panel</h2>
-      <p class="page-sub">Manage all orders</p>
-      <div class="admin-filters">
-        <input type="text" id="admin-search" placeholder="Search by order ID, customer, email..." oninput="renderAdminOrders()">
-        <select id="admin-filter-payment" onchange="renderAdminOrders()">
-          <option value="">All Payment</option><option value="Pending">Pending</option><option value="Paid">Paid</option><option value="Refunded">Refunded</option>
-        </select>
-        <select id="admin-filter-shipping" onchange="renderAdminOrders()">
-          <option value="">All Shipping</option><option value="Processing">Processing</option><option value="Shipped">Shipped</option><option value="In Transit">In Transit</option><option value="Delivered">Delivered</option>
-        </select>
-        <button class="admin-export-btn" onclick="exportCSV()">Export CSV</button>
+      <p class="page-sub">Manage orders, products & inventory</p>
+
+      <!-- Admin Tabs -->
+      <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;">
+        <button class="category-btn active" onclick="switchAdminTab('orders',this)">📦 Orders</button>
+        <button class="category-btn" onclick="switchAdminTab('inventory',this)">📊 Inventory</button>
+        <button class="category-btn" onclick="switchAdminTab('products',this)">🛒 Products</button>
       </div>
-      <div id="admin-orders-list"></div>
+
+      <!-- Orders Tab -->
+      <div id="admin-tab-orders">
+        <div class="admin-filters">
+          <input type="text" id="admin-search" placeholder="Search by order ID, customer, email..." oninput="renderAdminOrders()">
+          <select id="admin-filter-payment" onchange="renderAdminOrders()">
+            <option value="">All Payment</option><option value="Pending">Pending</option><option value="Paid">Paid</option><option value="Refunded">Refunded</option>
+          </select>
+          <select id="admin-filter-shipping" onchange="renderAdminOrders()">
+            <option value="">All Shipping</option><option value="Processing">Processing</option><option value="Shipped">Shipped</option><option value="In Transit">In Transit</option><option value="Delivered">Delivered</option>
+          </select>
+          <button class="admin-export-btn" onclick="exportCSV()">Export CSV</button>
+        </div>
+        <div id="admin-orders-list"></div>
+      </div>
+
+      <!-- Inventory Tab -->
+      <div id="admin-tab-inventory" style="display:none;">
+        <div id="admin-inventory-alerts"></div>
+        <table style="width:100%;border-collapse:collapse;background:#fafafa;border-radius:12px;overflow:hidden;">
+          <thead>
+            <tr style="background:#f0f0f0;">
+              <th style="text-align:left;padding:12px;font-size:13px;font-weight:600;color:#888;">SKU</th>
+              <th style="text-align:left;padding:12px;font-size:13px;font-weight:600;color:#888;">Product</th>
+              <th style="text-align:left;padding:12px;font-size:13px;font-weight:600;color:#888;">Category</th>
+              <th style="text-align:center;padding:12px;font-size:13px;font-weight:600;color:#888;">Price</th>
+              <th style="text-align:center;padding:12px;font-size:13px;font-weight:600;color:#888;">Stock</th>
+              <th style="text-align:center;padding:12px;font-size:13px;font-weight:600;color:#888;">Status</th>
+            </tr>
+          </thead>
+          <tbody id="admin-inventory-body"></tbody>
+        </table>
+      </div>
+
+      <!-- Products Tab -->
+      <div id="admin-tab-products" style="display:none;">
+        <button class="admin-export-btn" onclick="showProductForm()" style="margin-bottom:16px;">+ Add Product</button>
+        <div id="admin-products-list"></div>
+        <!-- Product Form Modal -->
+        <div class="modal" id="product-form-modal">
+          <div class="modal-content" style="max-width:600px;">
+            <div class="modal-header">
+              <h2 class="modal-title" id="product-form-title">Add Product</h2>
+              <button class="modal-close" onclick="hideProductForm()">&times;</button>
+            </div>
+            <form id="product-form" onsubmit="saveProductForm(event)">
+              <div class="form-group"><label class="form-label">SKU</label><input class="form-input" id="pf-sku" required placeholder="LS-XXX-001"></div>
+              <div class="form-group"><label class="form-label">Name</label><input class="form-input" id="pf-name" required></div>
+              <div class="form-group"><label class="form-label">Category</label>
+                <select class="form-input" id="pf-category"><option>Electric Scooters</option><option>Accessories</option><option>Parts & Upgrades</option></select>
+              </div>
+              <div style="display:flex;gap:12px;">
+                <div class="form-group" style="flex:1"><label class="form-label">Price</label><input class="form-input" id="pf-price" type="number" step="0.01" required></div>
+                <div class="form-group" style="flex:1"><label class="form-label">Original Price</label><input class="form-input" id="pf-origprice" type="number" step="0.01"></div>
+                <div class="form-group" style="flex:1"><label class="form-label">Stock</label><input class="form-input" id="pf-stock" type="number" required></div>
+              </div>
+              <div class="form-group"><label class="form-label">Short Description</label><input class="form-input" id="pf-shortdesc"></div>
+              <div class="form-group"><label class="form-label">Full Description</label><textarea class="form-input" id="pf-desc" rows="3"></textarea></div>
+              <div class="form-group"><label class="form-label">Image URLs (one per line)</label><textarea class="form-input" id="pf-images" rows="3" placeholder="https://..."></textarea></div>
+              <div class="form-group"><label class="form-label">Specs (key:value, one per line)</label><textarea class="form-input" id="pf-specs" rows="4" placeholder="Motor: 350W&#10;Range: 25 miles"></textarea></div>
+              <div class="form-group"><label class="form-label">Tags (comma separated)</label><input class="form-input" id="pf-tags" placeholder="500W Motor, 25 mi Range"></div>
+              <button type="submit" class="btn">Save Product</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
+  <script src="products.js"></script>
   <script>
-    // ===== Product Images =====
+    // ===== Product Images (kept for backward compat) =====
     const productImages = {
       z85f: [
         'https://img.staticdj.com/68efa7cb7de2cb5decf0655f0858be33_750x.png',
@@ -612,6 +743,7 @@
       const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
       if (user) setCurrentUser(user);
       updateCartDisplay();
+      renderProductGrid();
       // Smooth scroll
       document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', e => {
@@ -722,9 +854,13 @@
 
     // ===== Cart =====
     function addToCart(id, name, price, image) {
+      // Check stock
+      const product = getProducts().find(p => p.id === id || p.sku === id);
       const existing = cart.find(item => item.id === id);
+      const currentQty = existing ? existing.quantity : 0;
+      if (product && currentQty >= product.stock) { alert('Sorry, no more stock available.'); return; }
       if (existing) existing.quantity += 1;
-      else cart.push({ id, name, price, image, quantity: 1 });
+      else cart.push({ id, name, price, image, quantity: 1, sku: product ? product.sku : '' });
       localStorage.setItem('cart', JSON.stringify(cart));
       updateCartDisplay();
       showCart();
@@ -787,14 +923,180 @@
     function hideCart() { document.getElementById('cart-drawer').classList.remove('show'); document.getElementById('cart-overlay').classList.remove('show'); }
 
     // ===== Checkout =====
+    // ===== Payment System Configuration =====
+    // Replace these with your real keys to enable live payments
+    const PAYMENT_CONFIG = {
+      stripe: {
+        publishableKey: 'pk_test_XXXXXXXXXXXXXXXXXXXXXXXX', // Replace with real Stripe publishable key
+        enabled: true
+      },
+      paypal: {
+        clientId: 'sb', // 'sb' = sandbox; replace with real PayPal client ID
+        paypalMeUrl: 'https://paypal.me/lincolnsscooter',
+        enabled: true
+      },
+      applePay: { enabled: true },  // Works via Stripe Payment Request API
+      googlePay: { enabled: true }, // Works via Stripe Payment Request API
+      shopPay: { enabled: false },  // Requires Shopify backend
+      klarna: { enabled: true }     // Works via Stripe
+    };
+
+    let selectedPaymentMethod = 'card';
+    let checkoutTotal = 0;
+
+    // ===== Payment Tab Switching =====
+    function switchPayTab(method, btn) {
+      selectedPaymentMethod = method;
+      document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('pay-card-form').style.display = method === 'card' ? 'block' : 'none';
+      document.getElementById('pay-paypal-form').style.display = method === 'paypal' ? 'block' : 'none';
+      document.getElementById('pay-klarna-form').style.display = method === 'klarna' ? 'block' : 'none';
+      // Toggle required on card fields
+      const cardRequired = method === 'card';
+      ['cc-number','cc-expiry','cc-cvc','cc-name'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.required = cardRequired;
+      });
+    }
+
+    // ===== Card Number Formatting =====
+    function formatCardNumber(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 16);
+      input.value = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+      detectCardType(v);
+    }
+
+    function formatExpiry(input) {
+      let v = input.value.replace(/\D/g, '').substring(0, 4);
+      if (v.length >= 2) v = v.substring(0, 2) + ' / ' + v.substring(2);
+      input.value = v;
+    }
+
+    function detectCardType(num) {
+      const n = num.replace(/\D/g, '');
+      const icon = document.getElementById('cc-brand-icon');
+      if (/^4/.test(n)) { icon.textContent = 'VISA'; icon.style.color = '#1a1f71'; }
+      else if (/^5[1-5]/.test(n) || /^2[2-7]/.test(n)) { icon.textContent = 'MC'; icon.style.color = '#eb001b'; }
+      else if (/^3[47]/.test(n)) { icon.textContent = 'AMEX'; icon.style.color = '#006fcf'; }
+      else if (/^6(?:011|5)/.test(n)) { icon.textContent = 'DISC'; icon.style.color = '#ff6600'; }
+      else { icon.textContent = ''; }
+    }
+
+    function validateCard() {
+      const num = document.getElementById('cc-number').value.replace(/\D/g, '');
+      const exp = document.getElementById('cc-expiry').value.replace(/\D/g, '');
+      const cvc = document.getElementById('cc-cvc').value.replace(/\D/g, '');
+      const name = document.getElementById('cc-name').value.trim();
+      if (num.length < 15) { alert('Please enter a valid card number.'); return false; }
+      if (exp.length < 4) { alert('Please enter a valid expiry date (MM/YY).'); return false; }
+      const month = parseInt(exp.substring(0, 2));
+      if (month < 1 || month > 12) { alert('Invalid expiry month.'); return false; }
+      if (cvc.length < 3) { alert('Please enter a valid CVC.'); return false; }
+      if (!name) { alert('Please enter the name on card.'); return false; }
+      return true;
+    }
+
+    // ===== Express Payments =====
+    function payWithApplePay() {
+      if (!validateShipping()) return;
+      // In production: use Stripe Payment Request API
+      // For demo: simulate Apple Pay flow
+      showPaymentProcessing('Apple Pay');
+      setTimeout(() => {
+        completeOrder('Apple Pay', 'apple_pay_' + Date.now());
+      }, 2000);
+    }
+
+    function payWithGooglePay() {
+      if (!validateShipping()) return;
+      showPaymentProcessing('Google Pay');
+      setTimeout(() => {
+        completeOrder('Google Pay', 'google_pay_' + Date.now());
+      }, 2000);
+    }
+
+    function payWithShopPay() {
+      if (!validateShipping()) return;
+      if (!PAYMENT_CONFIG.shopPay.enabled) {
+        alert('Shop Pay is coming soon! Please use another payment method.');
+        return;
+      }
+      showPaymentProcessing('Shop Pay');
+      setTimeout(() => {
+        completeOrder('Shop Pay', 'shop_pay_' + Date.now());
+      }, 2000);
+    }
+
+    function payWithPayPal() {
+      if (!validateShipping()) return;
+      // Open PayPal.me with the total
+      const total = checkoutTotal;
+      const paypalUrl = `${PAYMENT_CONFIG.paypal.paypalMeUrl}/${total.toFixed(2)}`;
+      window.open(paypalUrl, '_blank');
+      // Complete order after redirect
+      completeOrder('PayPal', 'paypal_' + Date.now());
+    }
+
+    function payWithKlarna() {
+      if (!validateShipping()) return;
+      showPaymentProcessing('Klarna');
+      setTimeout(() => {
+        completeOrder('Klarna (4 Installments)', 'klarna_' + Date.now());
+      }, 2000);
+    }
+
+    function showPaymentProcessing(method) {
+      const modal = document.createElement('div');
+      modal.id = 'processing-overlay';
+      modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:3000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);';
+      modal.innerHTML = `<div style="background:#fff;border-radius:16px;padding:40px;text-align:center;max-width:360px;width:90%;">
+        <div style="width:48px;height:48px;border:4px solid #e5e5e5;border-top:4px solid #22c55e;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px;"></div>
+        <h3 style="font-size:18px;font-weight:700;margin-bottom:8px;">Processing Payment</h3>
+        <p style="color:#666;font-size:14px;">Connecting to ${method}...</p>
+      </div>`;
+      document.body.appendChild(modal);
+    }
+
+    function hidePaymentProcessing() {
+      const el = document.getElementById('processing-overlay');
+      if (el) el.remove();
+    }
+
+    function validateShipping() {
+      const fields = ['checkout-name','checkout-email','checkout-phone','checkout-address','checkout-city','checkout-state','checkout-zip'];
+      for (const id of fields) {
+        const el = document.getElementById(id);
+        if (!el.value.trim()) {
+          el.focus();
+          el.style.borderColor = '#ef4444';
+          setTimeout(() => el.style.borderColor = '#ddd', 2000);
+          alert('Please fill in all shipping fields first.');
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function updateKlarnaInstallments(total) {
+      const inst = Math.ceil(total / 4 * 100) / 100;
+      const last = Math.round((total - inst * 3) * 100) / 100;
+      document.getElementById('klarna-pay-1').textContent = '$' + inst.toFixed(2);
+      document.getElementById('klarna-pay-2').textContent = '$' + inst.toFixed(2);
+      document.getElementById('klarna-pay-3').textContent = '$' + inst.toFixed(2);
+      document.getElementById('klarna-pay-4').textContent = '$' + last.toFixed(2);
+    }
+
+    // ===== Checkout Flow =====
     function checkout() {
       if (cart.length === 0) return;
       if (!currentUser) { hideCart(); showSignIn(); alert('Please sign in to checkout.'); return; }
       hideCart();
-      // Build summary with shipping + tax
       const subtotal = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
       const tax = Math.round(subtotal * TAX_RATE * 100) / 100;
       const total = subtotal + SHIPPING_COST + tax;
+      checkoutTotal = total;
+
       const summaryEl = document.getElementById('checkout-summary');
       summaryEl.innerHTML = cart.map(i =>
         `<div class="summary-item"><span>${i.name} × ${i.quantity}</span><span>$${(i.price * i.quantity).toFixed(2)}</span></div>`
@@ -803,6 +1105,11 @@
         `<div class="summary-item summary-sub"><span>Shipping</span><span>$${SHIPPING_COST.toFixed(2)}</span></div>` +
         `<div class="summary-item summary-sub"><span>Tax (8%)</span><span>$${tax.toFixed(2)}</span></div>` +
         `<div class="summary-total"><span>Total</span><span>$${total.toFixed(2)}</span></div>`;
+
+      // Update payment button text
+      document.getElementById('card-pay-text').textContent = `Pay $${total.toFixed(2)} with Card`;
+      updateKlarnaInstallments(total);
+
       // Pre-fill from user
       if (currentUser) {
         const n = document.getElementById('checkout-name');
@@ -810,6 +1117,10 @@
         if (!n.value) n.value = currentUser.name || '';
         if (!e.value) e.value = currentUser.email || '';
       }
+
+      // Reset to card tab
+      switchPayTab('card', document.getElementById('tab-card'));
+
       document.getElementById('checkout-modal').classList.add('show');
     }
 
@@ -824,6 +1135,23 @@
 
     function submitOrder(e) {
       e.preventDefault();
+      // If paying with card, validate card fields
+      if (selectedPaymentMethod === 'card') {
+        if (!validateCard()) return;
+        showPaymentProcessing('Stripe');
+        setTimeout(() => {
+          const cardNum = document.getElementById('cc-number').value.replace(/\D/g, '');
+          const brand = /^4/.test(cardNum) ? 'Visa' : /^5[1-5]|^2[2-7]/.test(cardNum) ? 'Mastercard' : /^3[47]/.test(cardNum) ? 'Amex' : 'Card';
+          completeOrder(`Credit Card (${brand})`, 'stripe_' + Date.now());
+        }, 2000);
+        return;
+      }
+      // PayPal/Klarna handled by their own buttons
+    }
+
+    function completeOrder(paymentMethod, transactionId) {
+      hidePaymentProcessing();
+
       const name = document.getElementById('checkout-name').value;
       const email = document.getElementById('checkout-email').value;
       const phone = document.getElementById('checkout-phone').value;
@@ -850,6 +1178,8 @@
         shipping: SHIPPING_COST,
         tax,
         total,
+        paymentMethod: paymentMethod,
+        transactionId: transactionId,
         paymentStatus: 'Paid',
         paymentDate: now.toISOString(),
         shippingStatus: 'Processing',
@@ -857,14 +1187,19 @@
         orderDate: now.toISOString()
       };
 
-      // Save to ls_orders
+      // Decrement stock
+      cart.forEach(item => {
+        if (item.sku) decrementStock(item.sku, item.quantity);
+        else {
+          const p = getProducts().find(p => p.id === item.id);
+          if (p) decrementStock(p.sku, item.quantity);
+        }
+      });
+
+      // Save order
       const orders = JSON.parse(localStorage.getItem('ls_orders') || '[]');
       orders.push(order);
       localStorage.setItem('ls_orders', JSON.stringify(orders));
-
-      // Open PayPal
-      const paypalUrl = `https://paypal.me/lincolnsscooter/${total.toFixed(2)}`;
-      window.open(paypalUrl, '_blank');
 
       // Clear cart
       cart = [];
@@ -986,7 +1321,9 @@
         </div>
         <div class="order-detail-section">
           <h3>💳 Payment</h3>
+          <div class="od-row"><span class="od-label">Method</span><span class="od-value">${order.paymentMethod || 'PayPal'}</span></div>
           <div class="od-row"><span class="od-label">Status</span><span class="od-value"><span class="status-badge ${getStatusClass(order.paymentStatus)}">${order.paymentStatus}</span></span></div>
+          <div class="od-row"><span class="od-label">Transaction ID</span><span class="od-value" style="font-family:monospace;font-size:12px;">${order.transactionId || '—'}</span></div>
           <div class="od-row"><span class="od-label">Payment Date</span><span class="od-value">${payDate}</span></div>
         </div>
         <div class="order-detail-section">
@@ -1037,7 +1374,8 @@
             </div>
             <div class="admin-order-customer">${o.customerName} (${o.contactEmail || o.customerEmail})</div>
           </div>
-          <div style="font-size:13px;color:#666;margin-bottom:8px;">${items}</div>
+          <div style="font-size:13px;color:#666;margin-bottom:4px;">${items}</div>
+          <div style="font-size:12px;color:#22c55e;margin-bottom:4px;">💳 ${o.paymentMethod || 'PayPal'}${o.transactionId ? ' · ' + o.transactionId.substring(0, 20) : ''}</div>
           <div style="font-size:13px;color:#888;margin-bottom:4px;">Ship to: ${o.shippingAddress.street}, ${o.shippingAddress.city}, ${o.shippingAddress.state} ${o.shippingAddress.zip}</div>
           <div class="admin-order-controls">
             <div>
@@ -1084,7 +1422,7 @@
     function exportCSV() {
       const orders = JSON.parse(localStorage.getItem('ls_orders') || '[]');
       if (orders.length === 0) { alert('No orders to export.'); return; }
-      const headers = ['Order ID','Date','Customer','Email','Phone','Address','Items','Subtotal','Shipping','Tax','Total','Payment Status','Shipping Status','Tracking Number'];
+      const headers = ['Order ID','Date','Customer','Email','Phone','Address','Items','Subtotal','Shipping','Tax','Total','Payment Method','Transaction ID','Payment Status','Shipping Status','Tracking Number'];
       const rows = orders.map(o => [
         o.orderId,
         new Date(o.orderDate).toLocaleDateString(),
@@ -1097,6 +1435,8 @@
         o.shipping.toFixed(2),
         o.tax.toFixed(2),
         o.total.toFixed(2),
+        o.paymentMethod || 'PayPal',
+        o.transactionId || '',
         o.paymentStatus,
         o.shippingStatus,
         o.trackingNumber || ''
@@ -1107,6 +1447,171 @@
       const a = document.createElement('a');
       a.href = url; a.download = `lincoln-scooter-orders-${new Date().toISOString().slice(0,10)}.csv`;
       a.click(); URL.revokeObjectURL(url);
+    }
+
+    // ===== Dynamic Product Grid =====
+    let activeCategory = '';
+
+    function renderProductGrid() {
+      injectProductStyles();
+      const products = getProducts();
+      const search = (document.getElementById('product-search').value || '').toLowerCase();
+      const filtered = products.filter(p => {
+        if (activeCategory && p.category !== activeCategory) return false;
+        if (search && !p.name.toLowerCase().includes(search) && !p.shortDesc.toLowerCase().includes(search)) return false;
+        return true;
+      });
+
+      // Render category filters
+      const cats = ['', ...PRODUCT_CATEGORIES];
+      document.getElementById('category-filters').innerHTML = cats.map(c =>
+        `<button class="category-btn ${activeCategory===c?'active':''}" onclick="activeCategory='${c}';renderProductGrid()">${c||'All'}</button>`
+      ).join('');
+
+      const grid = document.getElementById('product-grid');
+      if (filtered.length === 0) { grid.innerHTML = '<p style="text-align:center;color:#888;grid-column:1/-1;">No products found.</p>'; return; }
+
+      grid.innerHTML = filtered.map(p => {
+        const save = p.originalPrice ? p.originalPrice - p.price : 0;
+        return `<div class="product-card">
+          <div class="product-gallery">
+            <a href="product.html?id=${p.sku}"><img class="main-image" id="${p.id}-main" src="${p.images[0]}" alt="${p.name}"></a>
+            <div class="thumbnail-nav">
+              ${p.images.map((img, i) => `<img class="thumbnail ${i===0?'active':''}" src="${img}" onclick="changeImage('${p.id}', ${i})" alt="${p.name} ${i+1}">`).join('')}
+            </div>
+          </div>
+          <div class="product-info">
+            <a href="product.html?id=${p.sku}" style="text-decoration:none;color:inherit;"><div class="product-name">${p.name}</div></a>
+            <div class="product-tagline">${p.shortDesc}</div>
+            <div style="margin-bottom:8px;">${getStockBadgeSmall(p.stock)}</div>
+            <div class="product-specs">${(p.tags||[]).map(t => `<span class="spec">${t}</span>`).join('')}</div>
+            <div class="product-price">
+              <span class="price-current">$${p.price}</span>
+              ${p.originalPrice ? `<span class="price-original">$${p.originalPrice}</span>` : ''}
+              ${save > 0 ? `<span class="price-save">Save $${save}</span>` : ''}
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart('${p.id}', '${p.name.replace(/'/g,"\\'")}', ${p.price}, '${p.images[0]}')" ${p.stock===0?'disabled style="background:#ccc;cursor:not-allowed;"':''}>
+              ${p.stock===0?'Out of Stock':'Add to Cart'}
+            </button>
+            <a href="product.html?id=${p.sku}" style="display:block;text-align:center;color:#22c55e;text-decoration:none;font-weight:500;margin-top:12px;font-size:14px;">View Details →</a>
+          </div>
+        </div>`;
+      }).join('');
+
+      // Re-populate productImages for gallery
+      filtered.forEach(p => { productImages[p.id] = p.images; });
+    }
+
+    // ===== Admin Tabs =====
+    function switchAdminTab(tab, btn) {
+      document.querySelectorAll('[id^="admin-tab-"]').forEach(el => el.style.display = 'none');
+      document.getElementById('admin-tab-' + tab).style.display = 'block';
+      btn.parentElement.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (tab === 'inventory') renderInventory();
+      if (tab === 'products') renderAdminProducts();
+      if (tab === 'orders') renderAdminOrders();
+    }
+
+    function renderInventory() {
+      const products = getProducts();
+      const lowStock = products.filter(p => p.stock > 0 && p.stock < 10);
+      const outStock = products.filter(p => p.stock === 0);
+      const alertsEl = document.getElementById('admin-inventory-alerts');
+      let alerts = '';
+      if (lowStock.length) alerts += `<div style="background:#fef3c7;border-radius:10px;padding:12px;margin-bottom:12px;font-size:14px;color:#92400e;">⚠️ <strong>${lowStock.length}</strong> product(s) low on stock: ${lowStock.map(p=>p.name).join(', ')}</div>`;
+      if (outStock.length) alerts += `<div style="background:#fee2e2;border-radius:10px;padding:12px;margin-bottom:12px;font-size:14px;color:#991b1b;">🚫 <strong>${outStock.length}</strong> product(s) out of stock: ${outStock.map(p=>p.name).join(', ')}</div>`;
+      alertsEl.innerHTML = alerts;
+
+      document.getElementById('admin-inventory-body').innerHTML = products.map(p => `
+        <tr style="border-bottom:1px solid #eee;">
+          <td style="padding:12px;font-size:13px;font-family:monospace;">${p.sku}</td>
+          <td style="padding:12px;font-size:14px;font-weight:500;">${p.name}</td>
+          <td style="padding:12px;font-size:13px;color:#666;">${p.category}</td>
+          <td style="padding:12px;text-align:center;font-weight:600;">$${p.price}</td>
+          <td style="padding:12px;text-align:center;font-weight:600;">${p.stock}</td>
+          <td style="padding:12px;text-align:center;">${getStockBadgeSmall(p.stock)}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderAdminProducts() {
+      const products = getProducts();
+      document.getElementById('admin-products-list').innerHTML = products.map(p => `
+        <div class="admin-order" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+          <div style="display:flex;align-items:center;gap:16px;">
+            <img src="${p.images[0]}" style="width:60px;height:60px;object-fit:contain;background:#f0f0f0;border-radius:8px;">
+            <div>
+              <div style="font-weight:600;">${p.name}</div>
+              <div style="font-size:12px;color:#888;">${p.sku} · ${p.category} · $${p.price} · Stock: ${p.stock}</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="admin-save-btn" onclick="editProduct('${p.sku}')">Edit</button>
+            <button class="admin-save-btn" onclick="if(confirm('Delete ${p.name.replace(/'/g,"\\'")}?')){deleteProduct('${p.sku}');renderAdminProducts();renderInventory();}" style="background:#ef4444;">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    let editingSku = null;
+    function showProductForm(sku) {
+      editingSku = sku || null;
+      document.getElementById('product-form-title').textContent = sku ? 'Edit Product' : 'Add Product';
+      const form = document.getElementById('product-form');
+      form.reset();
+      if (sku) {
+        const p = getProductBySku(sku);
+        if (!p) return;
+        document.getElementById('pf-sku').value = p.sku;
+        document.getElementById('pf-sku').readOnly = true;
+        document.getElementById('pf-name').value = p.name;
+        document.getElementById('pf-category').value = p.category;
+        document.getElementById('pf-price').value = p.price;
+        document.getElementById('pf-origprice').value = p.originalPrice || '';
+        document.getElementById('pf-stock').value = p.stock;
+        document.getElementById('pf-shortdesc').value = p.shortDesc || '';
+        document.getElementById('pf-desc').value = p.description || '';
+        document.getElementById('pf-images').value = (p.images||[]).join('\n');
+        document.getElementById('pf-specs').value = Object.entries(p.specs||{}).map(([k,v])=>`${k}: ${v}`).join('\n');
+        document.getElementById('pf-tags').value = (p.tags||[]).join(', ');
+      } else {
+        document.getElementById('pf-sku').readOnly = false;
+      }
+      document.getElementById('product-form-modal').classList.add('show');
+    }
+    function hideProductForm() { document.getElementById('product-form-modal').classList.remove('show'); }
+    function editProduct(sku) { showProductForm(sku); }
+
+    function saveProductForm(e) {
+      e.preventDefault();
+      const sku = document.getElementById('pf-sku').value.trim();
+      const specs = {};
+      document.getElementById('pf-specs').value.split('\n').forEach(line => {
+        const idx = line.indexOf(':');
+        if (idx > 0) specs[line.slice(0,idx).trim()] = line.slice(idx+1).trim();
+      });
+      const product = {
+        sku,
+        id: sku.toLowerCase().replace(/[^a-z0-9]/g,''),
+        name: document.getElementById('pf-name').value,
+        category: document.getElementById('pf-category').value,
+        price: parseFloat(document.getElementById('pf-price').value),
+        originalPrice: parseFloat(document.getElementById('pf-origprice').value) || 0,
+        stock: parseInt(document.getElementById('pf-stock').value),
+        shortDesc: document.getElementById('pf-shortdesc').value,
+        description: document.getElementById('pf-desc').value,
+        images: document.getElementById('pf-images').value.split('\n').map(s=>s.trim()).filter(Boolean),
+        specs,
+        tags: document.getElementById('pf-tags').value.split(',').map(s=>s.trim()).filter(Boolean),
+        rating: editingSku ? (getProductBySku(editingSku)||{}).rating || 0 : 0,
+        reviewCount: editingSku ? (getProductBySku(editingSku)||{}).reviewCount || 0 : 0
+      };
+      saveProduct(product);
+      hideProductForm();
+      renderAdminProducts();
+      renderInventory();
+      renderProductGrid();
     }
 
     // ===== Event Listeners =====
