@@ -16,7 +16,7 @@
     .logo { font-size: 22px; font-weight: 800; color: #1a1a1a; text-decoration: none; }
     .logo span { color: #22c55e; }
     .nav-links { display: flex; gap: 32px; align-items: center; }
-    .nav-links a { text-decoration: none; color: #555; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a { text-decoration: none; color: #555; font-size: 14px; font-weight: 500; transition: color 0.2s; cursor: pointer; }
     .nav-links a:hover { color: #1a1a1a; }
     .nav-user { display: flex; align-items: center; gap: 16px; }
     .cart-btn { position: relative; background: none; border: none; font-size: 20px; cursor: pointer; color: #555; transition: color 0.2s; }
@@ -25,9 +25,9 @@
     .user-dropdown { position: relative; }
     .user-btn { background: none; border: none; color: #555; font-size: 14px; font-weight: 500; cursor: pointer; padding: 8px 16px; border-radius: 6px; transition: all 0.2s; }
     .user-btn:hover { background: #f5f5f5; }
-    .dropdown-menu { position: absolute; top: 100%; right: 0; background: white; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 8px 0; min-width: 160px; display: none; }
+    .dropdown-menu { position: absolute; top: 100%; right: 0; background: white; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 8px 0; min-width: 160px; display: none; z-index: 200; }
     .dropdown-menu.show { display: block; }
-    .dropdown-item { display: block; padding: 10px 16px; color: #555; text-decoration: none; font-size: 14px; transition: background 0.2s; }
+    .dropdown-item { display: block; padding: 10px 16px; color: #555; text-decoration: none; font-size: 14px; transition: background 0.2s; cursor: pointer; }
     .dropdown-item:hover { background: #f5f5f5; }
     .auth-links { display: flex; gap: 16px; align-items: center; }
     .auth-btn { background: none; border: none; color: #555; font-size: 14px; font-weight: 500; cursor: pointer; transition: color 0.2s; }
@@ -38,8 +38,8 @@
     /* Modals */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; backdrop-filter: blur(4px); }
     .modal.show { display: flex; align-items: center; justify-content: center; }
-    .modal-content { background: white; border-radius: 16px; padding: 32px; max-width: 400px; width: 90%; max-height: 90%; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-    .modal-header { display: flex; justify-content: between; align-items: center; margin-bottom: 24px; }
+    .modal-content { background: white; border-radius: 16px; padding: 32px; max-width: 400px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
     .modal-title { font-size: 24px; font-weight: 700; }
     .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: #666; margin-left: auto; }
     .form-group { margin-bottom: 20px; }
@@ -75,7 +75,7 @@
     .qty-btn:hover { background: #f5f5f5; }
     .qty-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .cart-item-qty { font-size: 14px; font-weight: 600; min-width: 20px; text-align: center; }
-    .remove-btn { color: #ef4444; font-size: 12px; text-decoration: none; margin-left: auto; }
+    .remove-btn { color: #ef4444; font-size: 12px; text-decoration: none; margin-left: auto; cursor: pointer; }
     .remove-btn:hover { text-decoration: underline; }
     .cart-footer { padding: 24px; border-top: 1px solid #eee; }
     .cart-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
@@ -121,9 +121,11 @@
     .price-current { font-size: 28px; font-weight: 800; color: #1a1a1a; }
     .price-original { font-size: 16px; color: #bbb; text-decoration: line-through; }
     .price-save { font-size: 13px; font-weight: 600; color: #22c55e; background: #ecfdf5; padding: 4px 10px; border-radius: 6px; }
+
     /* Checkout Modal */
-    .checkout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
-    .checkout-box { background: #fff; border-radius: 16px; max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 32px; position: relative; }
+    .checkout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: flex-start; padding: 20px; overflow-y: auto; backdrop-filter: blur(4px); }
+    .checkout-modal.show { display: flex; }
+    .checkout-box { background: #fff; border-radius: 16px; max-width: 600px; width: 100%; padding: 32px; position: relative; margin: 40px auto; }
     .checkout-box h2 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
     .checkout-box .checkout-sub { color: #888; font-size: 14px; margin-bottom: 24px; }
     .checkout-box .form-row { display: flex; gap: 12px; }
@@ -133,12 +135,91 @@
     .checkout-box input:focus, .checkout-box select:focus { outline: none; border-color: #22c55e; }
     .checkout-box .order-summary { background: #f8f8f8; border-radius: 10px; padding: 16px; margin: 20px 0; }
     .checkout-box .order-summary .summary-item { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+    .checkout-box .order-summary .summary-item.summary-sub { color: #666; }
     .checkout-box .order-summary .summary-total { display: flex; justify-content: space-between; font-size: 18px; font-weight: 700; border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px; }
     .checkout-box .checkout-submit { width: 100%; padding: 16px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 20px; transition: background 0.2s; }
     .checkout-box .checkout-submit:hover { background: #22c55e; }
     .checkout-box .checkout-close { position: absolute; top: 16px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer; color: #999; }
     .checkout-box .paypal-note { text-align: center; margin-top: 12px; font-size: 13px; color: #888; }
     .checkout-box .paypal-note img { height: 24px; vertical-align: middle; margin-left: 6px; }
+
+    /* Order Confirmation Modal */
+    .confirmation-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); }
+    .confirmation-modal.show { display: flex; }
+    .confirmation-box { background: #fff; border-radius: 16px; max-width: 520px; width: 100%; padding: 40px; text-align: center; max-height: 90vh; overflow-y: auto; }
+    .confirmation-box .check-icon { width: 64px; height: 64px; background: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 32px; color: #fff; }
+    .confirmation-box h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .confirmation-box .conf-sub { color: #666; margin-bottom: 24px; font-size: 15px; }
+    .confirmation-box .order-id-display { background: #f8f8f8; border-radius: 10px; padding: 16px; margin-bottom: 20px; }
+    .confirmation-box .order-id-display .oid { font-size: 20px; font-weight: 700; color: #22c55e; }
+    .confirmation-box .conf-details { text-align: left; background: #f8f8f8; border-radius: 10px; padding: 16px; margin-bottom: 20px; }
+    .confirmation-box .conf-details .cd-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+    .confirmation-box .conf-details .cd-row.cd-total { font-weight: 700; font-size: 16px; border-top: 1px solid #ddd; padding-top: 8px; margin-top: 8px; }
+    .confirmation-box .delivery-est { background: #ecfdf5; border-radius: 10px; padding: 14px; margin-bottom: 24px; color: #166534; font-size: 14px; font-weight: 500; }
+    .confirmation-box .conf-btn { display: inline-block; padding: 14px 32px; background: #22c55e; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.2s; text-decoration: none; }
+    .confirmation-box .conf-btn:hover { background: #16a34a; }
+
+    /* Full-page views (Orders, Admin) */
+    .page-view { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #fff; z-index: 500; overflow-y: auto; }
+    .page-view.show { display: block; }
+    .page-view-inner { max-width: 1000px; margin: 0 auto; padding: 100px 24px 60px; }
+    .page-back { display: inline-flex; align-items: center; gap: 8px; color: #555; text-decoration: none; font-size: 14px; font-weight: 500; margin-bottom: 24px; cursor: pointer; }
+    .page-back:hover { color: #22c55e; }
+    .page-view h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .page-view .page-sub { color: #888; font-size: 14px; margin-bottom: 32px; }
+
+    /* Status Badges */
+    .status-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .status-processing { background: #fef3c7; color: #92400e; }
+    .status-shipped { background: #dbeafe; color: #1e40af; }
+    .status-intransit { background: #e0e7ff; color: #3730a3; }
+    .status-delivered { background: #d1fae5; color: #065f46; }
+    .status-paid { background: #d1fae5; color: #065f46; }
+    .status-pending { background: #fef3c7; color: #92400e; }
+    .status-refunded { background: #fee2e2; color: #991b1b; }
+
+    /* Order Cards */
+    .order-card { background: #fafafa; border: 1px solid #eee; border-radius: 12px; padding: 20px; margin-bottom: 16px; cursor: pointer; transition: all 0.2s; }
+    .order-card:hover { border-color: #22c55e; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .order-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    .order-card-id { font-weight: 700; font-size: 16px; }
+    .order-card-date { color: #888; font-size: 13px; }
+    .order-card-body { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .order-card-items { color: #555; font-size: 14px; flex: 1; }
+    .order-card-total { font-weight: 700; font-size: 18px; margin-right: 16px; }
+    .order-card-statuses { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* Order Detail */
+    .order-detail-section { background: #fafafa; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+    .order-detail-section h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; color: #333; }
+    .od-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; }
+    .od-row .od-label { color: #888; }
+    .od-row .od-value { font-weight: 500; }
+    .od-items-table { width: 100%; border-collapse: collapse; }
+    .od-items-table th { text-align: left; font-size: 12px; color: #888; font-weight: 600; padding: 8px 0; border-bottom: 1px solid #e5e5e5; }
+    .od-items-table td { padding: 10px 0; font-size: 14px; border-bottom: 1px solid #f0f0f0; }
+    .od-items-table tr:last-child td { border-bottom: none; }
+    .track-btn { display: inline-block; padding: 10px 20px; background: #1a1a1a; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; margin-top: 8px; }
+    .track-btn:hover { background: #22c55e; }
+
+    /* Admin Panel */
+    .admin-filters { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
+    .admin-filters input, .admin-filters select { padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; }
+    .admin-filters input:focus, .admin-filters select:focus { outline: none; border-color: #22c55e; }
+    .admin-filters input[type="text"] { flex: 1; min-width: 200px; }
+    .admin-export-btn { padding: 10px 20px; background: #1a1a1a; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .admin-export-btn:hover { background: #22c55e; }
+    .admin-order { background: #fafafa; border: 1px solid #eee; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+    .admin-order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    .admin-order-id { font-weight: 700; font-size: 15px; }
+    .admin-order-customer { color: #555; font-size: 13px; }
+    .admin-order-controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-top: 12px; }
+    .admin-order-controls label { font-size: 12px; font-weight: 600; color: #888; display: block; margin-bottom: 4px; }
+    .admin-order-controls select, .admin-order-controls input { padding: 8px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; font-family: inherit; }
+    .admin-order-controls select:focus, .admin-order-controls input:focus { outline: none; border-color: #22c55e; }
+    .admin-save-btn { padding: 8px 16px; background: #22c55e; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; align-self: flex-end; }
+    .admin-save-btn:hover { background: #16a34a; }
+    .no-orders { text-align: center; color: #888; padding: 40px; }
 
     .add-to-cart-btn { display: block; width: 100%; padding: 14px; background: #22c55e; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; transition: all 0.2s; }
     .add-to-cart-btn:hover { background: #16a34a; transform: translateY(-1px); }
@@ -169,6 +250,7 @@
       .hero-badges { gap: 24px; }
       .nav-links { display: none; }
       .cart-drawer { max-width: 100%; }
+      .admin-order-controls { flex-direction: column; }
     }
     @media (max-width: 600px) {
       .features-grid { grid-template-columns: 1fr; }
@@ -178,6 +260,9 @@
       .spec { padding: 4px 8px; font-size: 11px; }
       .thumbnail-nav { gap: 4px; }
       .thumbnail { width: 40px; height: 40px; }
+      .checkout-box { padding: 20px; }
+      .admin-filters { flex-direction: column; }
+      .order-card-body { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -186,10 +271,10 @@
   <!-- Nav -->
   <nav>
     <div class="nav-inner">
-      <a href="#" class="logo">Lincoln's <span>Scooter</span></a>
+      <a href="#" class="logo" onclick="goHome()">Lincoln's <span>Scooter</span></a>
       <div class="nav-links">
-        <a href="#products">Products</a>
-        <a href="#features">Why Us</a>
+        <a href="#products" onclick="goHome()">Products</a>
+        <a href="#features" onclick="goHome()">Why Us</a>
       </div>
       <div class="nav-user">
         <button class="cart-btn" onclick="toggleCart()">
@@ -207,7 +292,9 @@
         <div class="user-dropdown" id="user-dropdown" style="display: none;">
           <button class="user-btn" id="user-name" onclick="toggleUserMenu()">Welcome, User!</button>
           <div class="dropdown-menu" id="user-menu">
-            <a href="#" class="dropdown-item" onclick="signOut()">Sign Out</a>
+            <a class="dropdown-item" onclick="showOrderHistory()">📦 My Orders</a>
+            <a class="dropdown-item" id="admin-menu-item" style="display:none;" onclick="showAdminPanel()">⚙️ Admin Panel</a>
+            <a class="dropdown-item" onclick="signOut()">Sign Out</a>
           </div>
         </div>
       </div>
@@ -273,41 +360,27 @@
       <button class="cart-close" onclick="hideCart()">&times;</button>
     </div>
     <div class="cart-content" id="cart-content">
-      <div class="cart-empty" id="cart-empty">
-        Your cart is empty
-      </div>
+      <div class="cart-empty" id="cart-empty">Your cart is empty</div>
     </div>
     <div class="cart-footer" id="cart-footer" style="display: none;">
       <div class="cart-total">
         <span class="total-label">Total:</span>
         <span class="total-amount" id="cart-total">$0</span>
       </div>
-      <button class="btn checkout-btn" onclick="checkout()">Checkout with PayPal</button>
+      <button class="btn checkout-btn" onclick="checkout()">Checkout</button>
     </div>
   </div>
 
   <!-- Hero -->
-  <section class="hero">
+  <section class="hero" id="home-hero">
     <h1>Ride <span>Electric</span>.<br>Ride Smart.</h1>
     <p>Premium electric scooters at unbeatable prices. Ships from our US warehouse — fast delivery, no hassle.</p>
     <a href="#products" class="hero-cta">Shop Now →</a>
     <div class="hero-badges">
-      <div class="badge">
-        <div class="num">🇺🇸</div>
-        <div class="label">US Warehouse</div>
-      </div>
-      <div class="badge">
-        <div class="num">UL</div>
-        <div class="label">UL2272 Certified</div>
-      </div>
-      <div class="badge">
-        <div class="num">30</div>
-        <div class="label">Day Returns</div>
-      </div>
-      <div class="badge">
-        <div class="num">Free</div>
-        <div class="label">Shipping</div>
-      </div>
+      <div class="badge"><div class="num">🇺🇸</div><div class="label">US Warehouse</div></div>
+      <div class="badge"><div class="num">UL</div><div class="label">UL2272 Certified</div></div>
+      <div class="badge"><div class="num">30</div><div class="label">Day Returns</div></div>
+      <div class="badge"><div class="num">Free</div><div class="label">Shipping</div></div>
     </div>
   </section>
 
@@ -315,15 +388,11 @@
   <section class="products" id="products">
     <h2 class="section-title">Our Scooters</h2>
     <p class="section-sub">Three models. Every rider covered.</p>
-    
     <div class="product-grid">
-      
       <!-- Z85F -->
       <div class="product-card">
         <div class="product-gallery">
-          <a href="z85f.html">
-            <img class="main-image" id="z85f-main" src="https://img.staticdj.com/68efa7cb7de2cb5decf0655f0858be33_750x.png" alt="G-Cycle Z85F Electric Scooter">
-          </a>
+          <a href="z85f.html"><img class="main-image" id="z85f-main" src="https://img.staticdj.com/68efa7cb7de2cb5decf0655f0858be33_750x.png" alt="G-Cycle Z85F Electric Scooter"></a>
           <div class="thumbnail-nav">
             <img class="thumbnail active" src="https://img.staticdj.com/68efa7cb7de2cb5decf0655f0858be33_750x.png" onclick="changeImage('z85f', 0)" alt="Z85F Image 1">
             <img class="thumbnail" src="https://img.staticdj.com/9662c14fba4f50ee5ddc8715b7faeb17_750x.png" onclick="changeImage('z85f', 1)" alt="Z85F Image 2">
@@ -334,33 +403,22 @@
           </div>
         </div>
         <div class="product-info">
-          <a href="z85f.html" style="text-decoration: none; color: inherit;">
-            <div class="product-name">G-Cycle Z85F</div>
-          </a>
+          <a href="z85f.html" style="text-decoration: none; color: inherit;"><div class="product-name">G-Cycle Z85F</div></a>
           <div class="product-tagline">Lightweight city commuter. Foldable, fast, and fun. Max 500W Motor, Up to 18.6 Miles Long Range, 15.5 MPH Top Speed, 8.5'' Honeycomb Tires, Dual Brake System.</div>
           <div class="product-specs">
-            <span class="spec">500W Motor</span>
-            <span class="spec">18.6 mi Range</span>
-            <span class="spec">15.5 MPH</span>
-            <span class="spec">8.5" Tires</span>
-            <span class="spec">UL2272 Certified</span>
+            <span class="spec">500W Motor</span><span class="spec">18.6 mi Range</span><span class="spec">15.5 MPH</span><span class="spec">8.5" Tires</span><span class="spec">UL2272 Certified</span>
           </div>
           <div class="product-price">
-            <span class="price-current">$299</span>
-            <span class="price-original">$349</span>
-            <span class="price-save">Save $50</span>
+            <span class="price-current">$299</span><span class="price-original">$349</span><span class="price-save">Save $50</span>
           </div>
           <button class="add-to-cart-btn" onclick="addToCart('z85f', 'G-Cycle Z85F', 299, 'https://img.staticdj.com/68efa7cb7de2cb5decf0655f0858be33_750x.png')">Add to Cart</button>
           <a href="z85f.html" style="display: block; text-align: center; color: #22c55e; text-decoration: none; font-weight: 500; margin-top: 12px; font-size: 14px;">View Details →</a>
         </div>
       </div>
-
       <!-- Atomi Alpha Lite -->
       <div class="product-card">
         <div class="product-gallery">
-          <a href="alpha-lite.html">
-            <img class="main-image" id="alpha-main" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_5_1800x1800.png" alt="Atomi Alpha Lite Electric Scooter">
-          </a>
+          <a href="alpha-lite.html"><img class="main-image" id="alpha-main" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_5_1800x1800.png" alt="Atomi Alpha Lite Electric Scooter"></a>
           <div class="thumbnail-nav">
             <img class="thumbnail active" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_5_1800x1800.png" onclick="changeImage('alpha', 0)" alt="Alpha Image 1">
             <img class="thumbnail" src="https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_1_1800x1800.png" onclick="changeImage('alpha', 1)" alt="Alpha Image 2">
@@ -371,32 +429,22 @@
           </div>
         </div>
         <div class="product-info">
-          <a href="alpha-lite.html" style="text-decoration: none; color: inherit;">
-            <div class="product-name">Atomi Alpha Lite</div>
-          </a>
+          <a href="alpha-lite.html" style="text-decoration: none; color: inherit;"><div class="product-name">Atomi Alpha Lite</div></a>
           <div class="product-tagline">Best value. Tubeless tires, app control, long range. 25 miles range, 6 hour charge, up to 265lbs load.</div>
           <div class="product-specs">
-            <span class="spec">25 mi Range</span>
-            <span class="spec">Tubeless Tires</span>
-            <span class="spec">App Lock</span>
-            <span class="spec">265 lbs Max</span>
+            <span class="spec">25 mi Range</span><span class="spec">Tubeless Tires</span><span class="spec">App Lock</span><span class="spec">265 lbs Max</span>
           </div>
           <div class="product-price">
-            <span class="price-current">$289</span>
-            <span class="price-original">$549</span>
-            <span class="price-save">Save $260</span>
+            <span class="price-current">$289</span><span class="price-original">$549</span><span class="price-save">Save $260</span>
           </div>
           <button class="add-to-cart-btn" onclick="addToCart('alpha', 'Atomi Alpha Lite', 289, 'https://www.atomiscooters.com/cdn/shop/files/ALPHA_LITE_5_1800x1800.png')">Add to Cart</button>
           <a href="alpha-lite.html" style="display: block; text-align: center; color: #22c55e; text-decoration: none; font-weight: 500; margin-top: 12px; font-size: 14px;">View Details →</a>
         </div>
       </div>
-
       <!-- Z14 -->
       <div class="product-card">
         <div class="product-gallery">
-          <a href="z14.html">
-            <img class="main-image" id="z14-main" src="https://img.staticdj.com/ac709f17e72605f8825569bdb4c060e8_750x.png" alt="G-Cycle Z14 Electric Scooter with Seat">
-          </a>
+          <a href="z14.html"><img class="main-image" id="z14-main" src="https://img.staticdj.com/ac709f17e72605f8825569bdb4c060e8_750x.png" alt="G-Cycle Z14 Electric Scooter with Seat"></a>
           <div class="thumbnail-nav">
             <img class="thumbnail active" src="https://img.staticdj.com/ac709f17e72605f8825569bdb4c060e8_750x.png" onclick="changeImage('z14', 0)" alt="Z14 Image 1">
             <img class="thumbnail" src="https://img.staticdj.com/e699c9060409cd63158ebaf3b881027a_750x.png" onclick="changeImage('z14', 1)" alt="Z14 Image 2">
@@ -407,26 +455,18 @@
           </div>
         </div>
         <div class="product-info">
-          <a href="z14.html" style="text-decoration: none; color: inherit;">
-            <div class="product-name">G-Cycle Z14</div>
-          </a>
+          <a href="z14.html" style="text-decoration: none; color: inherit;"><div class="product-name">G-Cycle Z14</div></a>
           <div class="product-tagline">The premium choice. Seat, basket, big wheels, max comfort. 800W Peak Motor, 27 Miles Range, Dual Brakes & Suspension, LCD Display, Foldable with Seat and Basket.</div>
           <div class="product-specs">
-            <span class="spec">800W Motor</span>
-            <span class="spec">27 mi Range</span>
-            <span class="spec">14" Tires</span>
-            <span class="spec">With Seat & Basket</span>
+            <span class="spec">800W Motor</span><span class="spec">27 mi Range</span><span class="spec">14" Tires</span><span class="spec">With Seat & Basket</span>
           </div>
           <div class="product-price">
-            <span class="price-current">$599</span>
-            <span class="price-original">$649</span>
-            <span class="price-save">Save $50</span>
+            <span class="price-current">$599</span><span class="price-original">$649</span><span class="price-save">Save $50</span>
           </div>
           <button class="add-to-cart-btn" onclick="addToCart('z14', 'G-Cycle Z14', 599, 'https://img.staticdj.com/ac709f17e72605f8825569bdb4c060e8_750x.png')">Add to Cart</button>
           <a href="z14.html" style="display: block; text-align: center; color: #22c55e; text-decoration: none; font-weight: 500; margin-top: 12px; font-size: 14px;">View Details →</a>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -435,26 +475,10 @@
     <h2 class="section-title">Why Lincoln's Scooter?</h2>
     <p class="section-sub">We're not just another scooter store.</p>
     <div class="features-grid">
-      <div class="feature">
-        <div class="feature-icon">🏭</div>
-        <h3>US Warehouse</h3>
-        <p>All scooters ship from our American warehouse. Fast delivery, no customs delays.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🔋</div>
-        <h3>Long Range</h3>
-        <p>Up to 27 miles per charge. Commute, explore, and ride without range anxiety.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🛡️</div>
-        <h3>UL2272 Certified</h3>
-        <p>Safety tested. Dual braking systems. Ride with confidence and peace of mind.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">💰</div>
-        <h3>Best Prices</h3>
-        <p>Factory-direct pricing. Save up to $260 compared to retail stores.</p>
-      </div>
+      <div class="feature"><div class="feature-icon">🏭</div><h3>US Warehouse</h3><p>All scooters ship from our American warehouse. Fast delivery, no customs delays.</p></div>
+      <div class="feature"><div class="feature-icon">🔋</div><h3>Long Range</h3><p>Up to 27 miles per charge. Commute, explore, and ride without range anxiety.</p></div>
+      <div class="feature"><div class="feature-icon">🛡️</div><h3>UL2272 Certified</h3><p>Safety tested. Dual braking systems. Ride with confidence and peace of mind.</p></div>
+      <div class="feature"><div class="feature-icon">💰</div><h3>Best Prices</h3><p>Factory-direct pricing. Save up to $260 compared to retail stores.</p></div>
     </div>
   </section>
 
@@ -467,45 +491,85 @@
   <div class="checkout-modal" id="checkout-modal">
     <div class="checkout-box">
       <button class="checkout-close" onclick="closeCheckout()">&times;</button>
-      <h2>Shipping Information</h2>
-      <p class="checkout-sub">Enter your details to complete the order</p>
+      <h2>Checkout</h2>
+      <p class="checkout-sub">Review your order and enter shipping details</p>
       <div class="order-summary" id="checkout-summary"></div>
-      <form onsubmit="submitOrder(event)">
+      <form id="checkout-form" onsubmit="submitOrder(event)">
+        <h3 style="font-size:16px; font-weight:700; margin-bottom:4px;">Shipping Information</h3>
         <label for="checkout-name">Full Name *</label>
         <input type="text" id="checkout-name" required placeholder="John Doe">
-        
         <label for="checkout-email">Email *</label>
         <input type="email" id="checkout-email" required placeholder="john@example.com">
-        
         <label for="checkout-phone">Phone *</label>
         <input type="tel" id="checkout-phone" required placeholder="(555) 123-4567">
-        
         <label for="checkout-address">Street Address *</label>
         <input type="text" id="checkout-address" required placeholder="123 Main St, Apt 4">
-        
         <div class="form-row">
-          <div>
-            <label for="checkout-city">City *</label>
-            <input type="text" id="checkout-city" required placeholder="Omaha">
-          </div>
-          <div>
-            <label for="checkout-state">State *</label>
-            <input type="text" id="checkout-state" required placeholder="NE" maxlength="2">
-          </div>
-          <div>
-            <label for="checkout-zip">ZIP *</label>
-            <input type="text" id="checkout-zip" required placeholder="68102">
-          </div>
+          <div><label for="checkout-city">City *</label><input type="text" id="checkout-city" required placeholder="Omaha"></div>
+          <div><label for="checkout-state">State *</label><input type="text" id="checkout-state" required placeholder="NE" maxlength="2"></div>
+          <div><label for="checkout-zip">ZIP *</label><input type="text" id="checkout-zip" required placeholder="68102"></div>
         </div>
-        
-        <button type="submit" class="checkout-submit">Complete Order & Pay with PayPal →</button>
+        <h3 style="font-size:16px; font-weight:700; margin-top:20px; margin-bottom:8px;">Payment</h3>
+        <p style="font-size:13px; color:#888; margin-bottom:12px;">You will be redirected to PayPal to complete payment after placing your order.</p>
+        <button type="submit" class="checkout-submit">Place Order & Pay with PayPal →</button>
         <div class="paypal-note">🔒 Secure payment via <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" alt="PayPal"></div>
       </form>
     </div>
   </div>
 
+  <!-- Order Confirmation Modal -->
+  <div class="confirmation-modal" id="confirmation-modal">
+    <div class="confirmation-box">
+      <div class="check-icon">✓</div>
+      <h2>Order Placed!</h2>
+      <p class="conf-sub">Thank you for your purchase. Your order has been confirmed.</p>
+      <div class="order-id-display"><div style="font-size:13px;color:#888;">Order ID</div><div class="oid" id="conf-order-id"></div></div>
+      <div class="conf-details" id="conf-details"></div>
+      <div class="delivery-est">📦 Estimated Delivery: <strong id="conf-delivery"></strong> (5-7 business days)</div>
+      <button class="conf-btn" onclick="closeConfirmation()">Continue Shopping</button>
+    </div>
+  </div>
+
+  <!-- Order History Page -->
+  <div class="page-view" id="orders-page">
+    <div class="page-view-inner">
+      <a class="page-back" onclick="goHome()">← Back to Shop</a>
+      <h2>📦 My Orders</h2>
+      <p class="page-sub">View your order history and track shipments</p>
+      <div id="orders-list"></div>
+    </div>
+  </div>
+
+  <!-- Order Detail Page -->
+  <div class="page-view" id="order-detail-page">
+    <div class="page-view-inner">
+      <a class="page-back" onclick="showOrderHistory()">← Back to Orders</a>
+      <div id="order-detail-content"></div>
+    </div>
+  </div>
+
+  <!-- Admin Panel Page -->
+  <div class="page-view" id="admin-page">
+    <div class="page-view-inner">
+      <a class="page-back" onclick="goHome()">← Back to Shop</a>
+      <h2>⚙️ Admin Panel</h2>
+      <p class="page-sub">Manage all orders</p>
+      <div class="admin-filters">
+        <input type="text" id="admin-search" placeholder="Search by order ID, customer, email..." oninput="renderAdminOrders()">
+        <select id="admin-filter-payment" onchange="renderAdminOrders()">
+          <option value="">All Payment</option><option value="Pending">Pending</option><option value="Paid">Paid</option><option value="Refunded">Refunded</option>
+        </select>
+        <select id="admin-filter-shipping" onchange="renderAdminOrders()">
+          <option value="">All Shipping</option><option value="Processing">Processing</option><option value="Shipped">Shipped</option><option value="In Transit">In Transit</option><option value="Delivered">Delivered</option>
+        </select>
+        <button class="admin-export-btn" onclick="exportCSV()">Export CSV</button>
+      </div>
+      <div id="admin-orders-list"></div>
+    </div>
+  </div>
+
   <script>
-    // Product image data
+    // ===== Product Images =====
     const productImages = {
       z85f: [
         'https://img.staticdj.com/68efa7cb7de2cb5decf0655f0858be33_750x.png',
@@ -533,34 +597,49 @@
       ]
     };
 
-    // User authentication
-    let currentUser = null;
+    // ===== Constants =====
+    const SHIPPING_COST = 15;
+    const TAX_RATE = 0.08;
+    const ADMIN_EMAIL = 'admin';
+    const ADMIN_PASS = 'admin123';
 
-    // Check if user is logged in on page load
+    // ===== State =====
+    let currentUser = null;
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+    // ===== Init =====
     document.addEventListener('DOMContentLoaded', function() {
       const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
-      if (user) {
-        setCurrentUser(user);
-      }
+      if (user) setCurrentUser(user);
       updateCartDisplay();
-      
-      // Smooth scroll for nav links
+      // Smooth scroll
       document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', e => {
-          const target = document.querySelector(a.getAttribute('href'));
-          if (target) { 
-            e.preventDefault(); 
-            target.scrollIntoView({behavior:'smooth'}); 
-          }
+          const t = document.querySelector(a.getAttribute('href'));
+          if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
         });
       });
     });
 
+    // ===== Navigation =====
+    function goHome() {
+      document.querySelectorAll('.page-view').forEach(p => p.classList.remove('show'));
+      document.getElementById('user-menu').classList.remove('show');
+      window.scrollTo({top: 0});
+    }
+
+    function hideAllPages() {
+      document.querySelectorAll('.page-view').forEach(p => p.classList.remove('show'));
+    }
+
+    // ===== Auth =====
     function setCurrentUser(user) {
       currentUser = user;
       document.getElementById('auth-links').style.display = 'none';
       document.getElementById('user-dropdown').style.display = 'block';
       document.getElementById('user-name').textContent = `Welcome, ${user.name}!`;
+      // Show admin menu if admin
+      document.getElementById('admin-menu-item').style.display = isAdmin() ? 'block' : 'none';
       localStorage.setItem('currentUser', JSON.stringify(user));
     }
 
@@ -568,107 +647,61 @@
       currentUser = null;
       document.getElementById('auth-links').style.display = 'flex';
       document.getElementById('user-dropdown').style.display = 'none';
+      document.getElementById('admin-menu-item').style.display = 'none';
       localStorage.removeItem('currentUser');
     }
 
-    // Image gallery functions
-    function changeImage(product, index) {
-      const mainImage = document.getElementById(`${product}-main`);
-      const thumbnails = document.querySelectorAll(`#${product === 'z85f' ? 'z85f' : product === 'alpha' ? 'alpha' : 'z14'}-main`).length > 0 ? 
-        document.querySelector(`#${product === 'z85f' ? 'z85f' : product === 'alpha' ? 'alpha' : 'z14'}-main`).parentNode.querySelectorAll('.thumbnail') :
-        [];
-      
-      // Update main image
-      mainImage.src = productImages[product][index];
-      
-      // Update thumbnail active state
-      thumbnails.forEach((thumb, i) => {
-        if (i === index) {
-          thumb.classList.add('active');
-        } else {
-          thumb.classList.remove('active');
-        }
-      });
+    function isAdmin() {
+      return currentUser && currentUser.email === ADMIN_EMAIL;
     }
 
-    // Auth functions
-    function showSignIn() {
-      document.getElementById('signin-modal').classList.add('show');
-    }
-
-    function hideSignIn() {
-      document.getElementById('signin-modal').classList.remove('show');
-    }
-
-    function showSignUp() {
-      document.getElementById('signup-modal').classList.add('show');
-    }
-
-    function hideSignUp() {
-      document.getElementById('signup-modal').classList.remove('show');
-    }
-
-    function switchToSignUp() {
-      hideSignIn();
-      showSignUp();
-    }
-
-    function switchToSignIn() {
-      hideSignUp();
-      showSignIn();
-    }
-
-    function toggleUserMenu() {
-      const menu = document.getElementById('user-menu');
-      menu.classList.toggle('show');
-    }
+    function showSignIn() { document.getElementById('signin-modal').classList.add('show'); }
+    function hideSignIn() { document.getElementById('signin-modal').classList.remove('show'); }
+    function showSignUp() { document.getElementById('signup-modal').classList.add('show'); }
+    function hideSignUp() { document.getElementById('signup-modal').classList.remove('show'); }
+    function switchToSignUp() { hideSignIn(); showSignUp(); }
+    function switchToSignIn() { hideSignUp(); showSignIn(); }
+    function toggleUserMenu() { document.getElementById('user-menu').classList.toggle('show'); }
 
     function signOut() {
       clearCurrentUser();
       document.getElementById('user-menu').classList.remove('show');
-      // Clear cart on sign out (optional)
       localStorage.removeItem('cart');
+      cart = [];
       updateCartDisplay();
+      goHome();
     }
 
-    // Sign up form handler
+    // Sign up
     document.getElementById('signup-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      
       const name = document.getElementById('signup-name').value;
       const email = document.getElementById('signup-email').value;
       const password = document.getElementById('signup-password').value;
-      
-      // Store user (in real app, this would go to a backend)
       const users = JSON.parse(localStorage.getItem('users') || '[]');
-      
-      // Check if user already exists
-      if (users.find(u => u.email === email)) {
-        alert('User with this email already exists!');
-        return;
-      }
-      
+      if (users.find(u => u.email === email)) { alert('User with this email already exists!'); return; }
       const newUser = { id: Date.now(), name, email, password };
       users.push(newUser);
       localStorage.setItem('users', JSON.stringify(users));
-      
       setCurrentUser(newUser);
       hideSignUp();
-      
-      // Reset form
       document.getElementById('signup-form').reset();
     });
 
-    // Sign in form handler
+    // Sign in (also supports admin/admin123)
     document.getElementById('signin-form').addEventListener('submit', function(e) {
       e.preventDefault();
-      
       const email = document.getElementById('signin-email').value;
       const password = document.getElementById('signin-password').value;
-      
+      // Admin login
+      if (email === ADMIN_EMAIL && password === ADMIN_PASS) {
+        setCurrentUser({ id: 0, name: 'Admin', email: ADMIN_EMAIL });
+        hideSignIn();
+        document.getElementById('signin-form').reset();
+        return;
+      }
       const users = JSON.parse(localStorage.getItem('users') || '[]');
       const user = users.find(u => u.email === email && u.password === password);
-      
       if (user) {
         setCurrentUser(user);
         hideSignIn();
@@ -678,31 +711,28 @@
       }
     });
 
-    // Shopping cart
-    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    // ===== Image Gallery =====
+    function changeImage(product, index) {
+      const mainImage = document.getElementById(`${product}-main`);
+      const gallery = mainImage.closest('.product-gallery');
+      const thumbnails = gallery.querySelectorAll('.thumbnail');
+      mainImage.src = productImages[product][index];
+      thumbnails.forEach((t, i) => t.classList.toggle('active', i === index));
+    }
 
+    // ===== Cart =====
     function addToCart(id, name, price, image) {
-      const existingItem = cart.find(item => item.id === id);
-      
-      if (existingItem) {
-        existingItem.quantity += 1;
-      } else {
-        cart.push({ id, name, price, image, quantity: 1 });
-      }
-      
+      const existing = cart.find(item => item.id === id);
+      if (existing) existing.quantity += 1;
+      else cart.push({ id, name, price, image, quantity: 1 });
       localStorage.setItem('cart', JSON.stringify(cart));
       updateCartDisplay();
       showCart();
-      
-      // Show feedback
       const button = event.target;
-      const originalText = button.textContent;
+      const orig = button.textContent;
       button.textContent = 'Added!';
       button.style.background = '#22c55e';
-      setTimeout(() => {
-        button.textContent = originalText;
-        button.style.background = '';
-      }, 1000);
+      setTimeout(() => { button.textContent = orig; button.style.background = ''; }, 1000);
     }
 
     function removeFromCart(id) {
@@ -715,12 +745,8 @@
       const item = cart.find(item => item.id === id);
       if (item) {
         item.quantity += change;
-        if (item.quantity <= 0) {
-          removeFromCart(id);
-        } else {
-          localStorage.setItem('cart', JSON.stringify(cart));
-          updateCartDisplay();
-        }
+        if (item.quantity <= 0) removeFromCart(id);
+        else { localStorage.setItem('cart', JSON.stringify(cart)); updateCartDisplay(); }
       }
     }
 
@@ -729,13 +755,10 @@
       const cartContent = document.getElementById('cart-content');
       const cartFooter = document.getElementById('cart-footer');
       const cartTotal = document.getElementById('cart-total');
-      
-      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-      const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      
+      const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
+      const totalPrice = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
       cartCount.textContent = totalItems;
       cartTotal.textContent = `$${totalPrice}`;
-      
       if (cart.length === 0) {
         cartFooter.style.display = 'none';
         cartContent.innerHTML = '<div class="cart-empty">Your cart is empty</div>';
@@ -751,7 +774,7 @@
                 <button class="qty-btn" onclick="updateQuantity('${item.id}', -1)" ${item.quantity <= 1 ? 'disabled' : ''}>−</button>
                 <span class="cart-item-qty">${item.quantity}</span>
                 <button class="qty-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
-                <a href="#" class="remove-btn" onclick="event.preventDefault();removeFromCart('${item.id}')">Remove</a>
+                <a class="remove-btn" onclick="event.preventDefault();removeFromCart('${item.id}')">Remove</a>
               </div>
             </div>
           </div>
@@ -759,123 +782,351 @@
       }
     }
 
-    function showCart() {
-      document.getElementById('cart-drawer').classList.add('show');
-      document.getElementById('cart-overlay').classList.add('show');
-    }
+    function showCart() { document.getElementById('cart-drawer').classList.add('show'); document.getElementById('cart-overlay').classList.add('show'); }
+    function toggleCart() { document.getElementById('cart-drawer').classList.toggle('show'); document.getElementById('cart-overlay').classList.toggle('show'); }
+    function hideCart() { document.getElementById('cart-drawer').classList.remove('show'); document.getElementById('cart-overlay').classList.remove('show'); }
 
-    function toggleCart() {
-      const cartDrawer = document.getElementById('cart-drawer');
-      const cartOverlay = document.getElementById('cart-overlay');
-      
-      cartDrawer.classList.toggle('show');
-      cartOverlay.classList.toggle('show');
-    }
-
-    function hideCart() {
-      document.getElementById('cart-drawer').classList.remove('show');
-      document.getElementById('cart-overlay').classList.remove('show');
-    }
-
+    // ===== Checkout =====
     function checkout() {
       if (cart.length === 0) return;
+      if (!currentUser) { hideCart(); showSignIn(); alert('Please sign in to checkout.'); return; }
       hideCart();
-      
-      // Populate order summary
-      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      // Build summary with shipping + tax
+      const subtotal = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+      const tax = Math.round(subtotal * TAX_RATE * 100) / 100;
+      const total = subtotal + SHIPPING_COST + tax;
       const summaryEl = document.getElementById('checkout-summary');
-      summaryEl.innerHTML = cart.map(item => 
-        `<div class="summary-item"><span>${item.name} × ${item.quantity}</span><span>$${item.price * item.quantity}</span></div>`
-      ).join('') + `<div class="summary-total"><span>Total</span><span>$${total}</span></div>`;
-      
-      // Pre-fill from user account if logged in
-      const user = JSON.parse(localStorage.getItem('user') || 'null');
-      if (user) {
-        const nameEl = document.getElementById('checkout-name');
-        const emailEl = document.getElementById('checkout-email');
-        if (nameEl && !nameEl.value) nameEl.value = user.name || '';
-        if (emailEl && !emailEl.value) emailEl.value = user.email || '';
+      summaryEl.innerHTML = cart.map(i =>
+        `<div class="summary-item"><span>${i.name} × ${i.quantity}</span><span>$${(i.price * i.quantity).toFixed(2)}</span></div>`
+      ).join('') +
+        `<div class="summary-item summary-sub"><span>Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>` +
+        `<div class="summary-item summary-sub"><span>Shipping</span><span>$${SHIPPING_COST.toFixed(2)}</span></div>` +
+        `<div class="summary-item summary-sub"><span>Tax (8%)</span><span>$${tax.toFixed(2)}</span></div>` +
+        `<div class="summary-total"><span>Total</span><span>$${total.toFixed(2)}</span></div>`;
+      // Pre-fill from user
+      if (currentUser) {
+        const n = document.getElementById('checkout-name');
+        const e = document.getElementById('checkout-email');
+        if (!n.value) n.value = currentUser.name || '';
+        if (!e.value) e.value = currentUser.email || '';
       }
-      
-      document.getElementById('checkout-modal').style.display = 'flex';
+      document.getElementById('checkout-modal').classList.add('show');
     }
 
-    function closeCheckout() {
-      document.getElementById('checkout-modal').style.display = 'none';
+    function closeCheckout() { document.getElementById('checkout-modal').classList.remove('show'); }
+
+    function generateOrderId() {
+      const d = new Date();
+      const ds = d.getFullYear().toString() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
+      const rand = String(Math.floor(1000 + Math.random() * 9000));
+      return `LS-${ds}-${rand}`;
     }
 
     function submitOrder(e) {
       e.preventDefault();
-      const form = e.target;
-      const name = form.querySelector('#checkout-name').value;
-      const email = form.querySelector('#checkout-email').value;
-      const phone = form.querySelector('#checkout-phone').value;
-      const address = form.querySelector('#checkout-address').value;
-      const city = form.querySelector('#checkout-city').value;
-      const state = form.querySelector('#checkout-state').value;
-      const zip = form.querySelector('#checkout-zip').value;
+      const name = document.getElementById('checkout-name').value;
+      const email = document.getElementById('checkout-email').value;
+      const phone = document.getElementById('checkout-phone').value;
+      const address = document.getElementById('checkout-address').value;
+      const city = document.getElementById('checkout-city').value;
+      const state = document.getElementById('checkout-state').value;
+      const zip = document.getElementById('checkout-zip').value;
 
-      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      const items = cart.map(item => `${item.name} x${item.quantity} ($${item.price * item.quantity})`).join(', ');
+      const subtotal = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+      const tax = Math.round(subtotal * TAX_RATE * 100) / 100;
+      const total = subtotal + SHIPPING_COST + tax;
+      const orderId = generateOrderId();
+      const now = new Date();
 
-      // Save order to localStorage
-      const order = { name, email, phone, address: `${address}, ${city}, ${state} ${zip}`, items, total, date: new Date().toISOString() };
-      const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+      const order = {
+        orderId,
+        customerName: name,
+        customerEmail: currentUser ? currentUser.email : email,
+        contactEmail: email,
+        phone,
+        shippingAddress: { street: address, city, state, zip },
+        items: cart.map(i => ({ id: i.id, name: i.name, price: i.price, quantity: i.quantity, image: i.image })),
+        subtotal,
+        shipping: SHIPPING_COST,
+        tax,
+        total,
+        paymentStatus: 'Paid',
+        paymentDate: now.toISOString(),
+        shippingStatus: 'Processing',
+        trackingNumber: '',
+        orderDate: now.toISOString()
+      };
+
+      // Save to ls_orders
+      const orders = JSON.parse(localStorage.getItem('ls_orders') || '[]');
       orders.push(order);
-      localStorage.setItem('orders', JSON.stringify(orders));
+      localStorage.setItem('ls_orders', JSON.stringify(orders));
 
-      // Send order details via mailto as backup
-      const subject = encodeURIComponent('New Order - Lincoln\'s Scooter - $' + total);
-      const body = encodeURIComponent(
-        'Order Details:\n' + items + '\nTotal: $' + total + '\n\n' +
-        'Customer: ' + name + '\nEmail: ' + email + '\nPhone: ' + phone + '\n' +
-        'Ship to: ' + address + ', ' + city + ', ' + state + ' ' + zip
-      );
-
-      // Open PayPal payment
-      const paypalUrl = `https://paypal.me/lincolnsscooter/${total}`;
+      // Open PayPal
+      const paypalUrl = `https://paypal.me/lincolnsscooter/${total.toFixed(2)}`;
       window.open(paypalUrl, '_blank');
-
-      // Send email notification
-      window.open('mailto:support@lincolnsscooter.com?subject=' + subject + '&body=' + body, '_self');
 
       // Clear cart
       cart = [];
       localStorage.setItem('cart', JSON.stringify(cart));
       updateCartDisplay();
       closeCheckout();
-      
-      alert('Thank you for your order! Please complete the PayPal payment in the new tab. We will ship to your address once payment is confirmed.');
+      document.getElementById('checkout-form').reset();
+
+      // Show confirmation
+      showConfirmation(order);
     }
 
-    // Close dropdowns when clicking outside
+    function showConfirmation(order) {
+      document.getElementById('conf-order-id').textContent = order.orderId;
+      const detailsEl = document.getElementById('conf-details');
+      detailsEl.innerHTML = order.items.map(i =>
+        `<div class="cd-row"><span>${i.name} × ${i.quantity}</span><span>$${(i.price * i.quantity).toFixed(2)}</span></div>`
+      ).join('') +
+        `<div class="cd-row"><span>Subtotal</span><span>$${order.subtotal.toFixed(2)}</span></div>` +
+        `<div class="cd-row"><span>Shipping</span><span>$${order.shipping.toFixed(2)}</span></div>` +
+        `<div class="cd-row"><span>Tax</span><span>$${order.tax.toFixed(2)}</span></div>` +
+        `<div class="cd-row cd-total"><span>Total</span><span>$${order.total.toFixed(2)}</span></div>`;
+      // Estimated delivery
+      const d = new Date();
+      const d1 = new Date(d); d1.setDate(d1.getDate() + 5);
+      const d2 = new Date(d); d2.setDate(d2.getDate() + 7);
+      const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      document.getElementById('conf-delivery').textContent = `${fmt(d1)} – ${fmt(d2)}`;
+      document.getElementById('confirmation-modal').classList.add('show');
+    }
+
+    function closeConfirmation() {
+      document.getElementById('confirmation-modal').classList.remove('show');
+    }
+
+    // ===== Order History =====
+    function showOrderHistory() {
+      if (!currentUser) { showSignIn(); return; }
+      document.getElementById('user-menu').classList.remove('show');
+      hideAllPages();
+      renderOrderHistory();
+      document.getElementById('orders-page').classList.add('show');
+      window.scrollTo({top: 0});
+    }
+
+    function getStatusClass(status) {
+      const map = {
+        'Processing': 'status-processing', 'Shipped': 'status-shipped', 'In Transit': 'status-intransit',
+        'Delivered': 'status-delivered', 'Paid': 'status-paid', 'Pending': 'status-pending', 'Refunded': 'status-refunded'
+      };
+      return map[status] || 'status-pending';
+    }
+
+    function renderOrderHistory() {
+      const orders = JSON.parse(localStorage.getItem('ls_orders') || '[]');
+      const myOrders = orders.filter(o => o.customerEmail === currentUser.email).reverse();
+      const el = document.getElementById('orders-list');
+      if (myOrders.length === 0) {
+        el.innerHTML = '<div class="no-orders">No orders yet. Start shopping!</div>';
+        return;
+      }
+      el.innerHTML = myOrders.map(o => {
+        const date = new Date(o.orderDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        const itemsSummary = o.items.map(i => `${i.name} ×${i.quantity}`).join(', ');
+        return `<div class="order-card" onclick="showOrderDetail('${o.orderId}')">
+          <div class="order-card-header">
+            <span class="order-card-id">${o.orderId}</span>
+            <span class="order-card-date">${date}</span>
+          </div>
+          <div class="order-card-body">
+            <span class="order-card-items">${itemsSummary}</span>
+            <span class="order-card-total">$${o.total.toFixed(2)}</span>
+            <div class="order-card-statuses">
+              <span class="status-badge ${getStatusClass(o.paymentStatus)}">${o.paymentStatus}</span>
+              <span class="status-badge ${getStatusClass(o.shippingStatus)}">${o.shippingStatus}</span>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    // ===== Order Detail =====
+    function showOrderDetail(orderId) {
+      const orders = JSON.parse(localStorage.getItem('ls_orders') || '[]');
+      const order = orders.find(o => o.orderId === orderId);
+      if (!order) return;
+      hideAllPages();
+      const el = document.getElementById('order-detail-content');
+      const date = new Date(order.orderDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+      const payDate = order.paymentDate ? new Date(order.paymentDate).toLocaleString('en-US') : '—';
+      const addr = order.shippingAddress;
+      el.innerHTML = `
+        <h2 style="margin-bottom:4px;">Order ${order.orderId}</h2>
+        <p class="page-sub">Placed on ${date}</p>
+        <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;">
+          <span class="status-badge ${getStatusClass(order.paymentStatus)}">Payment: ${order.paymentStatus}</span>
+          <span class="status-badge ${getStatusClass(order.shippingStatus)}">Shipping: ${order.shippingStatus}</span>
+        </div>
+        <div class="order-detail-section">
+          <h3>📦 Items</h3>
+          <table class="od-items-table">
+            <thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+            <tbody>${order.items.map(i => `<tr><td>${i.name}</td><td>${i.quantity}</td><td>$${i.price.toFixed(2)}</td><td>$${(i.price*i.quantity).toFixed(2)}</td></tr>`).join('')}</tbody>
+          </table>
+          <div style="margin-top:12px;">
+            <div class="od-row"><span class="od-label">Subtotal</span><span class="od-value">$${order.subtotal.toFixed(2)}</span></div>
+            <div class="od-row"><span class="od-label">Shipping</span><span class="od-value">$${order.shipping.toFixed(2)}</span></div>
+            <div class="od-row"><span class="od-label">Tax</span><span class="od-value">$${order.tax.toFixed(2)}</span></div>
+            <div class="od-row" style="font-weight:700;font-size:16px;border-top:1px solid #ddd;padding-top:8px;margin-top:8px;"><span>Total</span><span>$${order.total.toFixed(2)}</span></div>
+          </div>
+        </div>
+        <div class="order-detail-section">
+          <h3>🚚 Shipping Address</h3>
+          <div class="od-row"><span class="od-label">Name</span><span class="od-value">${order.customerName}</span></div>
+          <div class="od-row"><span class="od-label">Address</span><span class="od-value">${addr.street}</span></div>
+          <div class="od-row"><span class="od-label">City/State/ZIP</span><span class="od-value">${addr.city}, ${addr.state} ${addr.zip}</span></div>
+          <div class="od-row"><span class="od-label">Phone</span><span class="od-value">${order.phone}</span></div>
+          <div class="od-row"><span class="od-label">Email</span><span class="od-value">${order.contactEmail || order.customerEmail}</span></div>
+        </div>
+        <div class="order-detail-section">
+          <h3>💳 Payment</h3>
+          <div class="od-row"><span class="od-label">Status</span><span class="od-value"><span class="status-badge ${getStatusClass(order.paymentStatus)}">${order.paymentStatus}</span></span></div>
+          <div class="od-row"><span class="od-label">Payment Date</span><span class="od-value">${payDate}</span></div>
+        </div>
+        <div class="order-detail-section">
+          <h3>📍 Tracking</h3>
+          <div class="od-row"><span class="od-label">Shipping Status</span><span class="od-value"><span class="status-badge ${getStatusClass(order.shippingStatus)}">${order.shippingStatus}</span></span></div>
+          <div class="od-row"><span class="od-label">Tracking Number</span><span class="od-value">${order.trackingNumber || 'Not yet available'}</span></div>
+          ${order.trackingNumber ? `<a class="track-btn" href="https://www.google.com/search?q=${encodeURIComponent(order.trackingNumber)}+tracking" target="_blank">Track Your Package →</a>` : ''}
+        </div>`;
+      document.getElementById('order-detail-page').classList.add('show');
+      window.scrollTo({top: 0});
+    }
+
+    // ===== Admin Panel =====
+    function showAdminPanel() {
+      if (!isAdmin()) return;
+      document.getElementById('user-menu').classList.remove('show');
+      hideAllPages();
+      renderAdminOrders();
+      document.getElementById('admin-page').classList.add('show');
+      window.scrollTo({top: 0});
+    }
+
+    function renderAdminOrders() {
+      const orders = JSON.parse(localStorage.getItem('ls_orders') || '[]').slice().reverse();
+      const search = (document.getElementById('admin-search').value || '').toLowerCase();
+      const filterPay = document.getElementById('admin-filter-payment').value;
+      const filterShip = document.getElementById('admin-filter-shipping').value;
+      const filtered = orders.filter(o => {
+        if (filterPay && o.paymentStatus !== filterPay) return false;
+        if (filterShip && o.shippingStatus !== filterShip) return false;
+        if (search) {
+          const hay = `${o.orderId} ${o.customerName} ${o.customerEmail} ${o.contactEmail || ''}`.toLowerCase();
+          if (!hay.includes(search)) return false;
+        }
+        return true;
+      });
+      const el = document.getElementById('admin-orders-list');
+      if (filtered.length === 0) { el.innerHTML = '<div class="no-orders">No orders found.</div>'; return; }
+      el.innerHTML = filtered.map((o, idx) => {
+        const date = new Date(o.orderDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        const items = o.items.map(i => `${i.name} ×${i.quantity}`).join(', ');
+        return `<div class="admin-order" id="admin-order-${o.orderId}">
+          <div class="admin-order-header">
+            <div>
+              <span class="admin-order-id">${o.orderId}</span>
+              <span style="color:#888;font-size:13px;margin-left:8px;">${date}</span>
+              <span style="color:#888;font-size:13px;margin-left:8px;">$${o.total.toFixed(2)}</span>
+            </div>
+            <div class="admin-order-customer">${o.customerName} (${o.contactEmail || o.customerEmail})</div>
+          </div>
+          <div style="font-size:13px;color:#666;margin-bottom:8px;">${items}</div>
+          <div style="font-size:13px;color:#888;margin-bottom:4px;">Ship to: ${o.shippingAddress.street}, ${o.shippingAddress.city}, ${o.shippingAddress.state} ${o.shippingAddress.zip}</div>
+          <div class="admin-order-controls">
+            <div>
+              <label>Payment Status</label>
+              <select id="pay-${o.orderId}">
+                <option value="Pending" ${o.paymentStatus==='Pending'?'selected':''}>Pending</option>
+                <option value="Paid" ${o.paymentStatus==='Paid'?'selected':''}>Paid</option>
+                <option value="Refunded" ${o.paymentStatus==='Refunded'?'selected':''}>Refunded</option>
+              </select>
+            </div>
+            <div>
+              <label>Shipping Status</label>
+              <select id="ship-${o.orderId}">
+                <option value="Processing" ${o.shippingStatus==='Processing'?'selected':''}>Processing</option>
+                <option value="Shipped" ${o.shippingStatus==='Shipped'?'selected':''}>Shipped</option>
+                <option value="In Transit" ${o.shippingStatus==='In Transit'?'selected':''}>In Transit</option>
+                <option value="Delivered" ${o.shippingStatus==='Delivered'?'selected':''}>Delivered</option>
+              </select>
+            </div>
+            <div>
+              <label>Tracking #</label>
+              <input type="text" id="track-${o.orderId}" value="${o.trackingNumber || ''}" placeholder="Enter tracking #">
+            </div>
+            <button class="admin-save-btn" onclick="saveAdminOrder('${o.orderId}')">Save</button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function saveAdminOrder(orderId) {
+      const orders = JSON.parse(localStorage.getItem('ls_orders') || '[]');
+      const order = orders.find(o => o.orderId === orderId);
+      if (!order) return;
+      order.paymentStatus = document.getElementById(`pay-${orderId}`).value;
+      order.shippingStatus = document.getElementById(`ship-${orderId}`).value;
+      order.trackingNumber = document.getElementById(`track-${orderId}`).value;
+      localStorage.setItem('ls_orders', JSON.stringify(orders));
+      // Visual feedback
+      const el = document.getElementById(`admin-order-${orderId}`);
+      el.style.borderColor = '#22c55e';
+      setTimeout(() => el.style.borderColor = '#eee', 1500);
+    }
+
+    function exportCSV() {
+      const orders = JSON.parse(localStorage.getItem('ls_orders') || '[]');
+      if (orders.length === 0) { alert('No orders to export.'); return; }
+      const headers = ['Order ID','Date','Customer','Email','Phone','Address','Items','Subtotal','Shipping','Tax','Total','Payment Status','Shipping Status','Tracking Number'];
+      const rows = orders.map(o => [
+        o.orderId,
+        new Date(o.orderDate).toLocaleDateString(),
+        o.customerName,
+        o.contactEmail || o.customerEmail,
+        o.phone,
+        `${o.shippingAddress.street} ${o.shippingAddress.city} ${o.shippingAddress.state} ${o.shippingAddress.zip}`,
+        o.items.map(i => `${i.name} x${i.quantity}`).join('; '),
+        o.subtotal.toFixed(2),
+        o.shipping.toFixed(2),
+        o.tax.toFixed(2),
+        o.total.toFixed(2),
+        o.paymentStatus,
+        o.shippingStatus,
+        o.trackingNumber || ''
+      ]);
+      const csv = [headers, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `lincoln-scooter-orders-${new Date().toISOString().slice(0,10)}.csv`;
+      a.click(); URL.revokeObjectURL(url);
+    }
+
+    // ===== Event Listeners =====
     document.addEventListener('click', function(e) {
       const userDropdown = document.getElementById('user-dropdown');
       const userMenu = document.getElementById('user-menu');
-      
-      if (!userDropdown.contains(e.target)) {
-        userMenu.classList.remove('show');
-      }
-      
-      // Close modals when clicking outside
-      const modals = document.querySelectorAll('.modal');
-      modals.forEach(modal => {
-        if (e.target === modal) {
-          modal.classList.remove('show');
-        }
-      });
+      if (!userDropdown.contains(e.target)) userMenu.classList.remove('show');
+      document.querySelectorAll('.modal').forEach(modal => { if (e.target === modal) modal.classList.remove('show'); });
+      if (e.target === document.getElementById('checkout-modal')) closeCheckout();
+      if (e.target === document.getElementById('confirmation-modal')) closeConfirmation();
     });
 
-    // ESC key to close modals
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
-        document.querySelectorAll('.modal.show').forEach(modal => {
-          modal.classList.remove('show');
-        });
+        document.querySelectorAll('.modal.show').forEach(m => m.classList.remove('show'));
+        closeCheckout();
+        closeConfirmation();
         hideCart();
       }
     });
   </script>
-
 </body>
 </html>
