@@ -269,6 +269,8 @@
       .nav-links { display: none; }
       .cart-drawer { max-width: 100%; }
       .admin-order-controls { flex-direction: column; }
+      #profile-page .page-view-inner > div:first-of-type { grid-template-columns: 1fr !important; }
+      #admin-customer-stats { grid-template-columns: repeat(2, 1fr) !important; }
     }
     @media (max-width: 600px) {
       .features-grid { grid-template-columns: 1fr; }
@@ -310,9 +312,11 @@
         <div class="user-dropdown" id="user-dropdown" style="display: none;">
           <button class="user-btn" id="user-name" onclick="toggleUserMenu()">Welcome, User!</button>
           <div class="dropdown-menu" id="user-menu">
+            <a class="dropdown-item" onclick="showProfile()">👤 My Profile</a>
+            <a class="dropdown-item" onclick="showAddressBook()">📍 Addresses</a>
             <a class="dropdown-item" onclick="showOrderHistory()">📦 My Orders</a>
             <a class="dropdown-item" id="admin-menu-item" style="display:none;" onclick="showAdminPanel()">⚙️ Admin Panel</a>
-            <a class="dropdown-item" onclick="signOut()">Sign Out</a>
+            <a class="dropdown-item" onclick="signOut()" style="color:#ef4444;">Sign Out</a>
           </div>
         </div>
       </div>
@@ -352,17 +356,21 @@
       <form id="signup-form">
         <div class="form-group">
           <label class="form-label">Full Name</label>
-          <input type="text" class="form-input" id="signup-name" required>
+          <input type="text" class="form-input" id="signup-name" required placeholder="John Doe">
         </div>
         <div class="form-group">
           <label class="form-label">Email</label>
-          <input type="email" class="form-input" id="signup-email" required>
+          <input type="email" class="form-input" id="signup-email" required placeholder="john@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone (optional)</label>
+          <input type="tel" class="form-input" id="signup-phone" placeholder="(555) 123-4567">
         </div>
         <div class="form-group">
           <label class="form-label">Password</label>
-          <input type="password" class="form-input" id="signup-password" required minlength="6">
+          <input type="password" class="form-input" id="signup-password" required minlength="6" placeholder="Min 6 characters">
         </div>
-        <button type="submit" class="btn">Sign Up</button>
+        <button type="submit" class="btn">Create Account</button>
         <p class="text-center mt-16">
           Already have an account? <a href="#" class="text-link" onclick="switchToSignIn()">Sign in</a>
         </p>
@@ -616,6 +624,138 @@
     </div>
   </div>
 
+  <!-- Profile Page -->
+  <div class="page-view" id="profile-page">
+    <div class="page-view-inner">
+      <a class="page-back" onclick="goHome()">← Back to Shop</a>
+      <h2>👤 My Profile</h2>
+      <p class="page-sub">Manage your account information</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <!-- Profile Info -->
+        <div class="order-detail-section">
+          <h3>Account Information</h3>
+          <form id="profile-form" onsubmit="saveProfile(event)">
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-input" id="profile-name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-input" id="profile-email" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input type="tel" class="form-input" id="profile-phone" placeholder="(555) 123-4567">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date of Birth (optional)</label>
+              <input type="date" class="form-input" id="profile-dob">
+            </div>
+            <button type="submit" class="btn" style="width:auto;padding:10px 24px;">Save Changes</button>
+            <span id="profile-saved" style="color:#22c55e;font-size:14px;font-weight:600;margin-left:12px;display:none;">✓ Saved!</span>
+          </form>
+        </div>
+
+        <!-- Account Stats -->
+        <div>
+          <div class="order-detail-section">
+            <h3>📊 Account Summary</h3>
+            <div id="profile-stats"></div>
+          </div>
+          <div class="order-detail-section" style="margin-top:16px;">
+            <h3>🔒 Change Password</h3>
+            <form id="password-form" onsubmit="changePassword(event)">
+              <div class="form-group">
+                <label class="form-label">Current Password</label>
+                <input type="password" class="form-input" id="pw-current" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">New Password</label>
+                <input type="password" class="form-input" id="pw-new" required minlength="6">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm New Password</label>
+                <input type="password" class="form-input" id="pw-confirm" required minlength="6">
+              </div>
+              <button type="submit" class="btn" style="width:auto;padding:10px 24px;background:#555;">Update Password</button>
+              <span id="pw-saved" style="color:#22c55e;font-size:14px;font-weight:600;margin-left:12px;display:none;">✓ Updated!</span>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Orders -->
+      <div class="order-detail-section" style="margin-top:24px;">
+        <h3>📦 Recent Orders</h3>
+        <div id="profile-recent-orders"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Address Book Page -->
+  <div class="page-view" id="address-page">
+    <div class="page-view-inner">
+      <a class="page-back" onclick="goHome()">← Back to Shop</a>
+      <h2>📍 Address Book</h2>
+      <p class="page-sub">Manage your shipping addresses</p>
+      <button class="admin-export-btn" onclick="showAddressForm()" style="margin-bottom:20px;">+ Add New Address</button>
+      <div id="address-list"></div>
+
+      <!-- Address Form Modal -->
+      <div class="modal" id="address-form-modal">
+        <div class="modal-content" style="max-width:500px;">
+          <div class="modal-header">
+            <h2 class="modal-title" id="address-form-title">Add Address</h2>
+            <button class="modal-close" onclick="hideAddressForm()">&times;</button>
+          </div>
+          <form id="address-form" onsubmit="saveAddressForm(event)">
+            <div class="form-group">
+              <label class="form-label">Label</label>
+              <select class="form-input" id="addr-label">
+                <option value="Home">🏠 Home</option>
+                <option value="Work">🏢 Work</option>
+                <option value="Other">📍 Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input type="text" class="form-input" id="addr-name" required placeholder="John Doe">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Street Address *</label>
+              <input type="text" class="form-input" id="addr-street" required placeholder="123 Main St, Apt 4">
+            </div>
+            <div style="display:flex;gap:12px;">
+              <div class="form-group" style="flex:2;">
+                <label class="form-label">City *</label>
+                <input type="text" class="form-input" id="addr-city" required placeholder="Omaha">
+              </div>
+              <div class="form-group" style="flex:1;">
+                <label class="form-label">State *</label>
+                <input type="text" class="form-input" id="addr-state" required placeholder="NE" maxlength="2">
+              </div>
+              <div class="form-group" style="flex:1;">
+                <label class="form-label">ZIP *</label>
+                <input type="text" class="form-input" id="addr-zip" required placeholder="68102">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input type="tel" class="form-input" id="addr-phone" placeholder="(555) 123-4567">
+            </div>
+            <div class="form-group">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                <input type="checkbox" id="addr-default"> Set as default shipping address
+              </label>
+            </div>
+            <button type="submit" class="btn">Save Address</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Admin Panel Page -->
   <div class="page-view" id="admin-page">
     <div class="page-view-inner">
@@ -628,6 +768,7 @@
         <button class="category-btn active" onclick="switchAdminTab('orders',this)">📦 Orders</button>
         <button class="category-btn" onclick="switchAdminTab('inventory',this)">📊 Inventory</button>
         <button class="category-btn" onclick="switchAdminTab('products',this)">🛒 Products</button>
+        <button class="category-btn" onclick="switchAdminTab('customers',this)">👥 Customers</button>
       </div>
 
       <!-- Orders Tab -->
@@ -692,6 +833,32 @@
               <div class="form-group"><label class="form-label">Tags (comma separated)</label><input class="form-input" id="pf-tags" placeholder="500W Motor, 25 mi Range"></div>
               <button type="submit" class="btn">Save Product</button>
             </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customers Tab -->
+      <div id="admin-tab-customers" style="display:none;">
+        <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;align-items:center;">
+          <input type="text" id="admin-customer-search" placeholder="Search by name, email, phone..." oninput="renderAdminCustomers()" style="flex:1;min-width:200px;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;">
+          <select id="admin-customer-sort" onchange="renderAdminCustomers()" style="padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;">
+            <option value="recent">Most Recent</option>
+            <option value="orders">Most Orders</option>
+            <option value="spent">Most Spent</option>
+            <option value="name">Name A-Z</option>
+          </select>
+          <button class="admin-export-btn" onclick="exportCustomersCSV()">Export CSV</button>
+        </div>
+        <div id="admin-customer-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;"></div>
+        <div id="admin-customers-list"></div>
+        <!-- Customer Detail Modal -->
+        <div class="modal" id="customer-detail-modal">
+          <div class="modal-content" style="max-width:600px;max-height:80vh;overflow-y:auto;">
+            <div class="modal-header">
+              <h2 class="modal-title">Customer Detail</h2>
+              <button class="modal-close" onclick="document.getElementById('customer-detail-modal').classList.remove('show')">&times;</button>
+            </div>
+            <div id="customer-detail-content"></div>
           </div>
         </div>
       </div>
@@ -809,10 +976,20 @@
       e.preventDefault();
       const name = document.getElementById('signup-name').value;
       const email = document.getElementById('signup-email').value;
+      const phone = document.getElementById('signup-phone').value || '';
       const password = document.getElementById('signup-password').value;
       const users = JSON.parse(localStorage.getItem('users') || '[]');
       if (users.find(u => u.email === email)) { alert('User with this email already exists!'); return; }
-      const newUser = { id: Date.now(), name, email, password };
+      const newUser = {
+        id: Date.now(),
+        name,
+        email,
+        phone,
+        password,
+        dob: '',
+        addresses: [],
+        createdAt: new Date().toISOString()
+      };
       users.push(newUser);
       localStorage.setItem('users', JSON.stringify(users));
       setCurrentUser(newUser);
@@ -1117,6 +1294,9 @@
         if (!n.value) n.value = currentUser.name || '';
         if (!e.value) e.value = currentUser.email || '';
       }
+
+      // Auto-fill from saved address
+      prefillCheckoutAddress();
 
       // Reset to card tab
       switchPayTab('card', document.getElementById('tab-card'));
@@ -1502,6 +1682,402 @@
       filtered.forEach(p => { productImages[p.id] = p.images; });
     }
 
+    // ===== Profile =====
+    function showProfile() {
+      if (!currentUser) { showSignIn(); return; }
+      document.getElementById('user-menu').classList.remove('show');
+      hideAllPages();
+      // Load profile data
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.email === currentUser.email) || currentUser;
+      document.getElementById('profile-name').value = user.name || '';
+      document.getElementById('profile-email').value = user.email || '';
+      document.getElementById('profile-phone').value = user.phone || '';
+      document.getElementById('profile-dob').value = user.dob || '';
+
+      // Stats
+      const orders = JSON.parse(localStorage.getItem('ls_orders') || '[]');
+      const myOrders = orders.filter(o => o.customerEmail === currentUser.email);
+      const totalSpent = myOrders.reduce((s, o) => s + o.total, 0);
+      const totalItems = myOrders.reduce((s, o) => s + o.items.reduce((a, i) => a + i.quantity, 0), 0);
+      const memberSince = user.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'N/A';
+      document.getElementById('profile-stats').innerHTML = `
+        <div class="od-row"><span class="od-label">Member Since</span><span class="od-value">${memberSince}</span></div>
+        <div class="od-row"><span class="od-label">Total Orders</span><span class="od-value">${myOrders.length}</span></div>
+        <div class="od-row"><span class="od-label">Total Spent</span><span class="od-value" style="color:#22c55e;font-weight:700;">$${totalSpent.toFixed(2)}</span></div>
+        <div class="od-row"><span class="od-label">Items Purchased</span><span class="od-value">${totalItems}</span></div>
+        <div class="od-row"><span class="od-label">Saved Addresses</span><span class="od-value">${(user.addresses || []).length}</span></div>
+      `;
+
+      // Recent orders (last 5)
+      const recent = myOrders.slice(-5).reverse();
+      document.getElementById('profile-recent-orders').innerHTML = recent.length === 0
+        ? '<p style="color:#888;font-size:14px;">No orders yet.</p>'
+        : recent.map(o => {
+            const date = new Date(o.orderDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f0;cursor:pointer;" onclick="showOrderDetail('${o.orderId}')">
+              <div>
+                <span style="font-weight:600;font-size:14px;">${o.orderId}</span>
+                <span style="color:#888;font-size:13px;margin-left:8px;">${date}</span>
+                <span style="color:#666;font-size:13px;margin-left:8px;">${o.items.map(i=>i.name).join(', ')}</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-weight:600;">$${o.total.toFixed(2)}</span>
+                <span class="status-badge ${getStatusClass(o.shippingStatus)}" style="font-size:11px;">${o.shippingStatus}</span>
+              </div>
+            </div>`;
+          }).join('');
+
+      document.getElementById('profile-page').classList.add('show');
+      window.scrollTo({top: 0});
+    }
+
+    function saveProfile(e) {
+      e.preventDefault();
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const idx = users.findIndex(u => u.email === currentUser.email);
+      if (idx === -1) return;
+      const newEmail = document.getElementById('profile-email').value;
+      // Check email uniqueness
+      if (newEmail !== currentUser.email && users.find(u => u.email === newEmail)) {
+        alert('This email is already in use.'); return;
+      }
+      // Update orders if email changed
+      if (newEmail !== currentUser.email) {
+        const orders = JSON.parse(localStorage.getItem('ls_orders') || '[]');
+        orders.forEach(o => { if (o.customerEmail === currentUser.email) o.customerEmail = newEmail; });
+        localStorage.setItem('ls_orders', JSON.stringify(orders));
+      }
+      users[idx].name = document.getElementById('profile-name').value;
+      users[idx].email = newEmail;
+      users[idx].phone = document.getElementById('profile-phone').value;
+      users[idx].dob = document.getElementById('profile-dob').value;
+      localStorage.setItem('users', JSON.stringify(users));
+      setCurrentUser(users[idx]);
+      const saved = document.getElementById('profile-saved');
+      saved.style.display = 'inline';
+      setTimeout(() => saved.style.display = 'none', 2000);
+    }
+
+    function changePassword(e) {
+      e.preventDefault();
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.email === currentUser.email);
+      if (!user) return;
+      const current = document.getElementById('pw-current').value;
+      const newPw = document.getElementById('pw-new').value;
+      const confirm = document.getElementById('pw-confirm').value;
+      if (user.password !== current) { alert('Current password is incorrect.'); return; }
+      if (newPw !== confirm) { alert('New passwords do not match.'); return; }
+      if (newPw.length < 6) { alert('Password must be at least 6 characters.'); return; }
+      user.password = newPw;
+      localStorage.setItem('users', JSON.stringify(users));
+      document.getElementById('password-form').reset();
+      const saved = document.getElementById('pw-saved');
+      saved.style.display = 'inline';
+      setTimeout(() => saved.style.display = 'none', 2000);
+    }
+
+    // ===== Address Book =====
+    let editingAddressIdx = null;
+
+    function showAddressBook() {
+      if (!currentUser) { showSignIn(); return; }
+      document.getElementById('user-menu').classList.remove('show');
+      hideAllPages();
+      renderAddresses();
+      document.getElementById('address-page').classList.add('show');
+      window.scrollTo({top: 0});
+    }
+
+    function getUserAddresses() {
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.email === currentUser.email);
+      return (user && user.addresses) || [];
+    }
+
+    function saveUserAddresses(addresses) {
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.email === currentUser.email);
+      if (user) {
+        user.addresses = addresses;
+        localStorage.setItem('users', JSON.stringify(users));
+      }
+    }
+
+    function renderAddresses() {
+      const addresses = getUserAddresses();
+      const el = document.getElementById('address-list');
+      if (addresses.length === 0) {
+        el.innerHTML = '<div style="text-align:center;color:#888;padding:40px;">No saved addresses. Add one to speed up checkout!</div>';
+        return;
+      }
+      el.innerHTML = addresses.map((a, i) => `
+        <div class="admin-order" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+              <span style="font-weight:700;font-size:16px;">${a.label === 'Home' ? '🏠' : a.label === 'Work' ? '🏢' : '📍'} ${a.label}</span>
+              ${a.isDefault ? '<span class="status-badge status-delivered" style="font-size:11px;">Default</span>' : ''}
+            </div>
+            <div style="font-size:14px;color:#333;">${a.name}</div>
+            <div style="font-size:14px;color:#666;">${a.street}</div>
+            <div style="font-size:14px;color:#666;">${a.city}, ${a.state} ${a.zip}</div>
+            ${a.phone ? `<div style="font-size:13px;color:#888;margin-top:4px;">📞 ${a.phone}</div>` : ''}
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            ${!a.isDefault ? `<button class="admin-save-btn" style="background:#555;" onclick="setDefaultAddress(${i})">Set Default</button>` : ''}
+            <button class="admin-save-btn" onclick="editAddress(${i})">Edit</button>
+            <button class="admin-save-btn" style="background:#ef4444;" onclick="if(confirm('Delete this address?')){deleteAddress(${i})}">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function showAddressForm(idx) {
+      editingAddressIdx = idx !== undefined ? idx : null;
+      document.getElementById('address-form-title').textContent = idx !== undefined ? 'Edit Address' : 'Add Address';
+      const form = document.getElementById('address-form');
+      form.reset();
+      if (idx !== undefined) {
+        const a = getUserAddresses()[idx];
+        if (!a) return;
+        document.getElementById('addr-label').value = a.label;
+        document.getElementById('addr-name').value = a.name;
+        document.getElementById('addr-street').value = a.street;
+        document.getElementById('addr-city').value = a.city;
+        document.getElementById('addr-state').value = a.state;
+        document.getElementById('addr-zip').value = a.zip;
+        document.getElementById('addr-phone').value = a.phone || '';
+        document.getElementById('addr-default').checked = a.isDefault || false;
+      }
+      document.getElementById('address-form-modal').classList.add('show');
+    }
+
+    function hideAddressForm() { document.getElementById('address-form-modal').classList.remove('show'); }
+    function editAddress(idx) { showAddressForm(idx); }
+
+    function saveAddressForm(e) {
+      e.preventDefault();
+      const addresses = getUserAddresses();
+      const isDefault = document.getElementById('addr-default').checked;
+      const addr = {
+        label: document.getElementById('addr-label').value,
+        name: document.getElementById('addr-name').value,
+        street: document.getElementById('addr-street').value,
+        city: document.getElementById('addr-city').value,
+        state: document.getElementById('addr-state').value,
+        zip: document.getElementById('addr-zip').value,
+        phone: document.getElementById('addr-phone').value,
+        isDefault: isDefault
+      };
+      if (isDefault) addresses.forEach(a => a.isDefault = false);
+      if (editingAddressIdx !== null) {
+        addresses[editingAddressIdx] = addr;
+      } else {
+        if (addresses.length === 0) addr.isDefault = true;
+        addresses.push(addr);
+      }
+      saveUserAddresses(addresses);
+      hideAddressForm();
+      renderAddresses();
+    }
+
+    function deleteAddress(idx) {
+      const addresses = getUserAddresses();
+      const wasDefault = addresses[idx].isDefault;
+      addresses.splice(idx, 1);
+      if (wasDefault && addresses.length > 0) addresses[0].isDefault = true;
+      saveUserAddresses(addresses);
+      renderAddresses();
+    }
+
+    function setDefaultAddress(idx) {
+      const addresses = getUserAddresses();
+      addresses.forEach(a => a.isDefault = false);
+      addresses[idx].isDefault = true;
+      saveUserAddresses(addresses);
+      renderAddresses();
+    }
+
+    // Auto-fill checkout with default address
+    function prefillCheckoutAddress() {
+      if (!currentUser) return;
+      const addresses = getUserAddresses();
+      const def = addresses.find(a => a.isDefault) || addresses[0];
+      if (!def) return;
+      const fields = { 'checkout-name': def.name, 'checkout-address': def.street, 'checkout-city': def.city, 'checkout-state': def.state, 'checkout-zip': def.zip, 'checkout-phone': def.phone || '' };
+      Object.entries(fields).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el && !el.value) el.value = val;
+      });
+    }
+
+    // ===== Admin Customers =====
+    function getCustomerData() {
+      const users = JSON.parse(localStorage.getItem('users') || '[]').filter(u => u.email !== ADMIN_EMAIL);
+      const orders = JSON.parse(localStorage.getItem('ls_orders') || '[]');
+      return users.map(u => {
+        const userOrders = orders.filter(o => o.customerEmail === u.email);
+        const totalSpent = userOrders.reduce((s, o) => s + o.total, 0);
+        const totalItems = userOrders.reduce((s, o) => s + o.items.reduce((a, i) => a + i.quantity, 0), 0);
+        const lastOrder = userOrders.length > 0 ? userOrders[userOrders.length - 1].orderDate : null;
+        return { ...u, orderCount: userOrders.length, totalSpent, totalItems, lastOrder, orders: userOrders };
+      });
+    }
+
+    function renderAdminCustomers() {
+      const customers = getCustomerData();
+      const search = (document.getElementById('admin-customer-search').value || '').toLowerCase();
+      const sort = document.getElementById('admin-customer-sort').value;
+
+      let filtered = customers.filter(c => {
+        if (!search) return true;
+        return `${c.name} ${c.email} ${c.phone || ''}`.toLowerCase().includes(search);
+      });
+
+      // Sort
+      if (sort === 'orders') filtered.sort((a, b) => b.orderCount - a.orderCount);
+      else if (sort === 'spent') filtered.sort((a, b) => b.totalSpent - a.totalSpent);
+      else if (sort === 'name') filtered.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+      else filtered.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+
+      // Stats summary
+      const totalCustomers = customers.length;
+      const totalRevenue = customers.reduce((s, c) => s + c.totalSpent, 0);
+      const avgOrderValue = customers.reduce((s, c) => s + c.totalSpent, 0) / Math.max(customers.reduce((s, c) => s + c.orderCount, 0), 1);
+      const repeatCustomers = customers.filter(c => c.orderCount > 1).length;
+
+      document.getElementById('admin-customer-stats').innerHTML = [
+        { label: 'Total Customers', value: totalCustomers, icon: '👥' },
+        { label: 'Total Revenue', value: '$' + totalRevenue.toFixed(0), icon: '💰' },
+        { label: 'Avg Order Value', value: '$' + avgOrderValue.toFixed(0), icon: '📊' },
+        { label: 'Repeat Customers', value: repeatCustomers, icon: '🔄' }
+      ].map(s => `<div style="background:#fafafa;border-radius:12px;padding:16px;text-align:center;">
+        <div style="font-size:24px;margin-bottom:4px;">${s.icon}</div>
+        <div style="font-size:22px;font-weight:800;color:#1a1a1a;">${s.value}</div>
+        <div style="font-size:12px;color:#888;">${s.label}</div>
+      </div>`).join('');
+
+      const el = document.getElementById('admin-customers-list');
+      if (filtered.length === 0) {
+        el.innerHTML = '<div class="no-orders">No customers found.</div>';
+        return;
+      }
+
+      el.innerHTML = `
+        <table style="width:100%;border-collapse:collapse;background:#fafafa;border-radius:12px;overflow:hidden;">
+          <thead><tr style="background:#f0f0f0;">
+            <th style="text-align:left;padding:12px;font-size:13px;font-weight:600;color:#888;">Customer</th>
+            <th style="text-align:left;padding:12px;font-size:13px;font-weight:600;color:#888;">Contact</th>
+            <th style="text-align:center;padding:12px;font-size:13px;font-weight:600;color:#888;">Orders</th>
+            <th style="text-align:center;padding:12px;font-size:13px;font-weight:600;color:#888;">Total Spent</th>
+            <th style="text-align:center;padding:12px;font-size:13px;font-weight:600;color:#888;">Last Order</th>
+            <th style="text-align:center;padding:12px;font-size:13px;font-weight:600;color:#888;">Actions</th>
+          </tr></thead>
+          <tbody>${filtered.map(c => {
+            const lastDate = c.lastOrder ? new Date(c.lastOrder).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—';
+            const joined = c.createdAt ? new Date(c.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—';
+            return `<tr style="border-bottom:1px solid #eee;cursor:pointer;" onclick="showCustomerDetail('${c.email.replace(/'/g,"\\'")}')">
+              <td style="padding:12px;">
+                <div style="font-weight:600;font-size:14px;">${c.name || 'N/A'}</div>
+                <div style="font-size:12px;color:#888;">Joined ${joined}</div>
+              </td>
+              <td style="padding:12px;">
+                <div style="font-size:13px;">${c.email}</div>
+                <div style="font-size:12px;color:#888;">${c.phone || '—'}</div>
+              </td>
+              <td style="padding:12px;text-align:center;font-weight:600;">${c.orderCount}</td>
+              <td style="padding:12px;text-align:center;font-weight:600;color:#22c55e;">$${c.totalSpent.toFixed(2)}</td>
+              <td style="padding:12px;text-align:center;font-size:13px;color:#666;">${lastDate}</td>
+              <td style="padding:12px;text-align:center;">
+                <button class="admin-save-btn" onclick="event.stopPropagation();showCustomerDetail('${c.email.replace(/'/g,"\\'")}')">View</button>
+              </td>
+            </tr>`;
+          }).join('')}</tbody>
+        </table>`;
+    }
+
+    function showCustomerDetail(email) {
+      const customers = getCustomerData();
+      const c = customers.find(x => x.email === email);
+      if (!c) return;
+      const joined = c.createdAt ? new Date(c.createdAt).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) : 'N/A';
+      const addresses = (c.addresses || []);
+
+      let html = `
+        <div class="order-detail-section">
+          <h3>👤 Customer Information</h3>
+          <div class="od-row"><span class="od-label">Name</span><span class="od-value">${c.name}</span></div>
+          <div class="od-row"><span class="od-label">Email</span><span class="od-value">${c.email}</span></div>
+          <div class="od-row"><span class="od-label">Phone</span><span class="od-value">${c.phone || '—'}</span></div>
+          <div class="od-row"><span class="od-label">Date of Birth</span><span class="od-value">${c.dob || '—'}</span></div>
+          <div class="od-row"><span class="od-label">Member Since</span><span class="od-value">${joined}</span></div>
+        </div>
+        <div class="order-detail-section">
+          <h3>📊 Purchase Statistics</h3>
+          <div class="od-row"><span class="od-label">Total Orders</span><span class="od-value">${c.orderCount}</span></div>
+          <div class="od-row"><span class="od-label">Total Items</span><span class="od-value">${c.totalItems}</span></div>
+          <div class="od-row"><span class="od-label">Total Spent</span><span class="od-value" style="color:#22c55e;font-weight:700;">$${c.totalSpent.toFixed(2)}</span></div>
+          <div class="od-row"><span class="od-label">Avg Order Value</span><span class="od-value">$${c.orderCount > 0 ? (c.totalSpent / c.orderCount).toFixed(2) : '0.00'}</span></div>
+        </div>`;
+
+      if (addresses.length > 0) {
+        html += `<div class="order-detail-section"><h3>📍 Saved Addresses (${addresses.length})</h3>
+          ${addresses.map(a => `<div style="padding:8px 0;border-bottom:1px solid #f0f0f0;">
+            <span style="font-weight:600;">${a.label}</span>${a.isDefault ? ' <span class="status-badge status-delivered" style="font-size:10px;">Default</span>' : ''}
+            <div style="font-size:13px;color:#666;">${a.name} · ${a.street}, ${a.city}, ${a.state} ${a.zip}${a.phone ? ' · ' + a.phone : ''}</div>
+          </div>`).join('')}
+        </div>`;
+      }
+
+      if (c.orders.length > 0) {
+        html += `<div class="order-detail-section"><h3>📦 Order History (${c.orders.length})</h3>
+          <table style="width:100%;border-collapse:collapse;">
+            <thead><tr>
+              <th style="text-align:left;padding:8px 0;font-size:12px;color:#888;font-weight:600;border-bottom:1px solid #eee;">Order ID</th>
+              <th style="text-align:left;padding:8px 0;font-size:12px;color:#888;font-weight:600;border-bottom:1px solid #eee;">Date</th>
+              <th style="text-align:left;padding:8px 0;font-size:12px;color:#888;font-weight:600;border-bottom:1px solid #eee;">Items</th>
+              <th style="text-align:right;padding:8px 0;font-size:12px;color:#888;font-weight:600;border-bottom:1px solid #eee;">Total</th>
+              <th style="text-align:center;padding:8px 0;font-size:12px;color:#888;font-weight:600;border-bottom:1px solid #eee;">Status</th>
+            </tr></thead>
+            <tbody>${c.orders.slice().reverse().map(o => {
+              const date = new Date(o.orderDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+              return `<tr style="border-bottom:1px solid #f0f0f0;">
+                <td style="padding:8px 0;font-size:13px;font-weight:600;">${o.orderId}</td>
+                <td style="padding:8px 0;font-size:13px;color:#666;">${date}</td>
+                <td style="padding:8px 0;font-size:13px;">${o.items.map(i => i.name).join(', ')}</td>
+                <td style="padding:8px 0;font-size:13px;font-weight:600;text-align:right;">$${o.total.toFixed(2)}</td>
+                <td style="padding:8px 0;text-align:center;"><span class="status-badge ${getStatusClass(o.shippingStatus)}" style="font-size:11px;">${o.shippingStatus}</span></td>
+              </tr>`;
+            }).join('')}</tbody>
+          </table>
+        </div>`;
+      }
+
+      document.getElementById('customer-detail-content').innerHTML = html;
+      document.getElementById('customer-detail-modal').classList.add('show');
+    }
+
+    function exportCustomersCSV() {
+      const customers = getCustomerData();
+      if (customers.length === 0) { alert('No customers to export.'); return; }
+      const headers = ['Name','Email','Phone','DOB','Joined','Orders','Total Spent','Avg Order','Last Order','Addresses'];
+      const rows = customers.map(c => [
+        c.name, c.email, c.phone || '', c.dob || '',
+        c.createdAt ? new Date(c.createdAt).toLocaleDateString() : '',
+        c.orderCount, c.totalSpent.toFixed(2),
+        c.orderCount > 0 ? (c.totalSpent / c.orderCount).toFixed(2) : '0',
+        c.lastOrder ? new Date(c.lastOrder).toLocaleDateString() : '',
+        (c.addresses || []).length
+      ]);
+      const csv = [headers, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `lincoln-scooter-customers-${new Date().toISOString().slice(0,10)}.csv`;
+      a.click(); URL.revokeObjectURL(url);
+    }
+
     // ===== Admin Tabs =====
     function switchAdminTab(tab, btn) {
       document.querySelectorAll('[id^="admin-tab-"]').forEach(el => el.style.display = 'none');
@@ -1511,6 +2087,7 @@
       if (tab === 'inventory') renderInventory();
       if (tab === 'products') renderAdminProducts();
       if (tab === 'orders') renderAdminOrders();
+      if (tab === 'customers') renderAdminCustomers();
     }
 
     function renderInventory() {
